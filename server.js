@@ -4,48 +4,20 @@ const fs = require('fs');
 const express = require('express');
 const Stripe = require('stripe');
 
-if (!process.env.STRIPE_SECRET_KEY) {
+// .trim() guards against a stray trailing newline/whitespace from copy-pasting the
+// key into a dashboard env var field — that's invisible but breaks the HTTP client.
+const stripeSecretKey = (process.env.STRIPE_SECRET_KEY || '').trim();
+
+if (!stripeSecretKey) {
   console.warn('Missing STRIPE_SECRET_KEY — the site will run, but checkout will fail until it is set.');
 }
 
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder_key_not_set');
+const stripe = Stripe(stripeSecretKey || 'sk_test_placeholder_key_not_set');
 const pricing = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'pricing.json'), 'utf8'));
 
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Temporary diagnostic endpoint — remove once the Stripe connectivity issue is resolved.
-app.get('/api/debug-stripe', async (req, res) => {
-  const result = {};
-
-  const rawStart = Date.now();
-  try {
-    const r = await fetch('https://api.stripe.com/v1/balance', {
-      headers: { Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY || ''}` },
-      signal: AbortSignal.timeout(15000),
-    });
-    const body = await r.json();
-    result.rawFetch = { ok: true, ms: Date.now() - rawStart, status: r.status, body };
-  } catch (err) {
-    result.rawFetch = { ok: false, ms: Date.now() - rawStart, name: err.name, message: err.message, cause: err.cause ? String(err.cause) : undefined };
-  }
-
-  const sdkStart = Date.now();
-  try {
-    const balance = await stripe.balance.retrieve();
-    result.stripeSdk = { ok: true, ms: Date.now() - sdkStart, livemode: balance.livemode };
-  } catch (err) {
-    result.stripeSdk = {
-      ok: false,
-      ms: Date.now() - sdkStart,
-      allProps: Object.getOwnPropertyNames(err).reduce((acc, k) => { acc[k] = String(err[k]); return acc; }, {}),
-    };
-  }
-
-  result.nodeVersion = process.version;
-  res.json(result);
-});
 
 function buildLineItems(packageId, addonIds) {
   const pkg = pricing.packages[packageId];
