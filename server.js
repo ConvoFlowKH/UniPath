@@ -60,6 +60,9 @@ app.post('/api/create-checkout-session', async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
+      // We build line items dynamically (price_data) rather than from pre-registered
+      // Stripe Products, so they have no tax_code — Managed Payments requires one.
+      managed_payments: { enabled: false },
       line_items: lineItems,
       customer_email: s.email || undefined,
       success_url: `${origin}/?session_id={CHECKOUT_SESSION_ID}`,
