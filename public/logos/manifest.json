@@ -1,0 +1,252 @@
+[
+  {
+    "slug": "mit",
+    "name": "MIT",
+    "file": "/logos/mit.png"
+  },
+  {
+    "slug": "stanford",
+    "name": "Stanford",
+    "file": "/logos/stanford.png"
+  },
+  {
+    "slug": "harvard",
+    "name": "Harvard",
+    "file": "/logos/harvard.png"
+  },
+  {
+    "slug": "oxford",
+    "name": "Oxford",
+    "file": "/logos/oxford.png"
+  },
+  {
+    "slug": "cambridge",
+    "name": "Cambridge",
+    "file": "/logos/cambridge.png"
+  },
+  {
+    "slug": "imperial",
+    "name": "Imperial College London",
+    "file": "/logos/imperial.png"
+  },
+  {
+    "slug": "nus",
+    "name": "NUS",
+    "file": "/logos/nus.png"
+  },
+  {
+    "slug": "caltech",
+    "name": "Caltech",
+    "file": "/logos/caltech.png"
+  },
+  {
+    "slug": "princeton",
+    "name": "Princeton",
+    "file": "/logos/princeton.png"
+  },
+  {
+    "slug": "penn",
+    "name": "UPenn",
+    "file": "/logos/penn.png"
+  },
+  {
+    "slug": "yale",
+    "name": "Yale",
+    "file": "/logos/yale.png"
+  },
+  {
+    "slug": "columbia",
+    "name": "Columbia",
+    "file": "/logos/columbia.png"
+  },
+  {
+    "slug": "berkeley",
+    "name": "Berkeley",
+    "file": "/logos/berkeley.png"
+  },
+  {
+    "slug": "chicago",
+    "name": "Chicago",
+    "file": "/logos/chicago.png"
+  },
+  {
+    "slug": "cornell",
+    "name": "Cornell",
+    "file": "/logos/cornell.png"
+  },
+  {
+    "slug": "johns_hopkins",
+    "name": "Johns Hopkins",
+    "file": "/logos/johns_hopkins.png"
+  },
+  {
+    "slug": "duke",
+    "name": "Duke",
+    "file": "/logos/duke.png"
+  },
+  {
+    "slug": "ucla",
+    "name": "UCLA",
+    "file": "/logos/ucla.png"
+  },
+  {
+    "slug": "michigan",
+    "name": "Michigan",
+    "file": "/logos/michigan.png"
+  },
+  {
+    "slug": "carnegie_mellon",
+    "name": "Carnegie Mellon",
+    "file": "/logos/carnegie_mellon.png"
+  },
+  {
+    "slug": "nyu",
+    "name": "NYU",
+    "file": "/logos/nyu.png"
+  },
+  {
+    "slug": "northwestern",
+    "name": "Northwestern",
+    "file": "/logos/northwestern.png"
+  },
+  {
+    "slug": "usc",
+    "name": "USC",
+    "file": "/logos/usc.png"
+  },
+  {
+    "slug": "toronto",
+    "name": "Toronto",
+    "file": "/logos/toronto.png"
+  },
+  {
+    "slug": "mcgill",
+    "name": "McGill",
+    "file": "/logos/mcgill.png"
+  },
+  {
+    "slug": "ubc",
+    "name": "UBC",
+    "file": "/logos/ubc.png"
+  },
+  {
+    "slug": "melbourne",
+    "name": "Melbourne",
+    "file": "/logos/melbourne.png"
+  },
+  {
+    "slug": "sydney",
+    "name": "Sydney",
+    "file": "/logos/sydney.png"
+  },
+  {
+    "slug": "unsw",
+    "name": "UNSW",
+    "file": "/logos/unsw.png"
+  },
+  {
+    "slug": "anu",
+    "name": "ANU",
+    "file": "/logos/anu.png"
+  },
+  {
+    "slug": "monash",
+    "name": "Monash",
+    "file": "/logos/monash.png"
+  },
+  {
+    "slug": "queensland",
+    "name": "Queensland",
+    "file": "/logos/queensland.png"
+  },
+  {
+    "slug": "edinburgh",
+    "name": "Edinburgh",
+    "file": "/logos/edinburgh.png"
+  },
+  {
+    "slug": "ucl",
+    "name": "UCL",
+    "file": "/logos/ucl.png"
+  },
+  {
+    "slug": "kings_college_london",
+    "name": "King's College London",
+    "file": "/logos/kings_college_london.png"
+  },
+  {
+    "slug": "manchester",
+    "name": "Manchester",
+    "file": "/logos/manchester.png"
+  },
+  {
+    "slug": "eth_zurich",
+    "name": "ETH Zurich",
+    "file": "/logos/eth_zurich.png"
+  },
+  {
+    "slug": "epfl",
+    "name": "EPFL",
+    "file": "/logos/epfl.png"
+  },
+  {
+    "slug": "tum",
+    "name": "TU Munich",
+    "file": "/logos/tum.png"
+  },
+  {
+    "slug": "peking",
+    "name": "Peking",
+    "file": "/logos/peking.png"
+  },
+  {
+    "slug": "tsinghua",
+    "name": "Tsinghua",
+    "file": "/logos/tsinghua.png"
+  },
+  {
+    "slug": "fudan",
+    "name": "Fudan",
+    "file": "/logos/fudan.png"
+  },
+  {
+    "slug": "tokyo",
+    "name": "Tokyo",
+    "file": "/logos/tokyo.png"
+  },
+  {
+    "slug": "seoul_national",
+    "name": "Seoul National",
+    "file": "/logos/seoul_national.png"
+  },
+  {
+    "slug": "yonsei",
+    "name": "Yonsei",
+    "file": "/logos/yonsei.png"
+  },
+  {
+    "slug": "korea_university",
+    "name": "Korea University",
+    "file": "/logos/korea_university.png"
+  },
+  {
+    "slug": "hong_kong",
+    "name": "HKU",
+    "file": "/logos/hong_kong.png"
+  },
+  {
+    "slug": "ntu_singapore",
+    "name": "NTU Singapore",
+    "file": "/logos/ntu_singapore.png"
+  },
+  {
+    "slug": "hkust",
+    "name": "HKUST",
+    "file": "/logos/hkust.png"
+  },
+  {
+    "slug": "national_taiwan",
+    "name": "National Taiwan University",
+    "file": "/logos/national_taiwan.png"
+  }
+]

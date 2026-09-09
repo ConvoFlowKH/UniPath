@@ -637,41 +637,18 @@ let state = {
 };
 
 /* ============ RENDER: UNIVERSITY LOGO BAR ============ */
-// Each school's accent is its real, publicly-known brand color (colors aren't
-// copyrightable) — the badges are text, not the schools' actual crest artwork.
-const UNIVERSITIES = [
-  { name: 'UPenn', color: '#990000' },
-  { name: 'Cornell', color: '#B31B1B' },
-  { name: 'Brown', color: '#4E3629' },
-  { name: 'Dartmouth', color: '#00693E' },
-  { name: 'Duke', color: '#00539B' },
-  { name: 'Northwestern', color: '#4E2A84' },
-  { name: "King's College London", color: '#DC241F' },
-  { name: 'LSE', color: '#A91B0D' },
-  { name: 'Edinburgh', color: '#041E42' },
-  { name: 'Manchester', color: '#6C1D45' },
-  { name: 'Warwick', color: '#4B2E83' },
-  { name: 'Queensland', color: '#51247A' },
-  { name: 'Adelaide', color: '#00263A' },
-  { name: 'UTS', color: '#E4002B' },
-  { name: 'Macquarie', color: '#E2231A' },
-  { name: 'UWA', color: '#00539F' },
-  { name: 'Waterloo', color: '#FFD100' },
-  { name: 'Alberta', color: '#007A33' },
-  { name: 'Western', color: '#4F2683' },
-  { name: 'Ottawa', color: '#8B0000' },
-];
-
-function renderLogoMarquee(){
+async function renderLogoMarquee(){
   const track = document.getElementById('logoMarquee');
+  const res = await fetch('/logos/manifest.json');
+  const schools = await res.json();
+
   const badge = (u) => `
-    <span class="shrink-0 inline-flex items-center gap-2.5 rounded-full border border-gray-200 bg-white pl-3.5 pr-5 py-2.5 text-sm font-semibold text-ink-800 hover:border-gray-300 hover:shadow-card transition">
-      <span class="h-2.5 w-2.5 rounded-full" style="background:${u.color}"></span>
-      ${u.name}
+    <span class="shrink-0 inline-flex items-center justify-center h-16 w-32 sm:h-20 sm:w-40 rounded-xl border border-gray-100 bg-white px-4 py-2 hover:shadow-card transition">
+      <img src="${u.file}" alt="${u.name}" class="max-h-full max-w-full object-contain" loading="lazy" />
     </span>
   `;
   // duplicated once so the -50% translateX loop is seamless
-  track.innerHTML = UNIVERSITIES.map(badge).join('') + UNIVERSITIES.map(badge).join('');
+  track.innerHTML = schools.map(badge).join('') + schools.map(badge).join('');
 }
 
 /* ============ RENDER: DESTINATIONS ============ */
