@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UniPath — Your Pathway to Global Education</title>
+<meta name="description" content="UniPath is a study abroad and international education consultancy helping students get into top universities in the USA, UK, Canada, and Australia." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Urbanist:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          heading: ['Urbanist', 'ui-sans-serif', 'system-ui', 'sans-serif']
+        },
+        colors: {
+          brand: {
+            50: '#fff3ed', 100: '#ffe3d5', 200: '#ffc4aa', 300: '#ff9c74',
+            400: '#ff8256', 500: '#fe6a2e', 600: '#ef5015', 700: '#c73e10',
+            800: '#9e3212', 900: '#7f2c14'
+          },
+          ink: { 900: '#111111', 800: '#1b1b1b', 700: '#292929' }
+        },
+        boxShadow: {
+          soft: '0 10px 30px -10px rgba(15, 23, 42, 0.12)',
+          card: '0 2px 10px rgba(15, 23, 42, 0.06)'
+        },
+        keyframes: {
+          popIn: { '0%': { opacity: 0, transform: 'scale(.9)' }, '100%': { opacity: 1, transform: 'scale(1)' } },
+          checkDraw: { '0%': { strokeDashoffset: 48 }, '100%': { strokeDashoffset: 0 } },
+        },
+        animation: {
+          popIn: 'popIn .35s ease forwards',
+          checkDraw: 'checkDraw .6s ease forwards .15s',
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; color: #616161; }
+  h1, h2, h3, h4, h5, h6 { font-family: 'Urbanist', ui-sans-serif, system-ui, sans-serif; color: #111111; letter-spacing: -0.01em; }
+  section[id] { scroll-margin-top: 110px; }
+
+  @keyframes fadeUp { 0% { opacity: 0; transform: translateY(18px); } 100% { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; }
+  .reveal.in-view { animation: fadeUp .7s ease forwards; }
+
+  .hero-gradient {
+    background: radial-gradient(75% 45% at 50% 0%, #f0ece7 0%, #ffffff 100%);
+  }
+
+  .card-hover { transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease; }
+  .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -14px rgba(15,23,42,0.18); }
+
+  .step-line { transition: background-color .3s ease, border-color .3s ease; }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 999px; }
+
+  .modal-backdrop { background: rgba(11,15,25,0.55); backdrop-filter: blur(3px); }
+
+  .accordion-content { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+
+  .spinner { border-top-color: #f97316; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body class="bg-white text-ink-900 antialiased">
+
+<!-- ============ NAVBAR ============ -->
+<header id="navbar" class="fixed top-0 inset-x-0 z-40">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-5 flex items-center justify-between gap-4">
+    <a href="#home" class="flex items-center gap-2 shrink-0">
+      <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ink-900 text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+          <path d="M12 2 2 7l10 5 10-5-10-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M6 10.5V16c0 1.5 2.7 3.5 6 3.5s6-2 6-3.5v-5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 8v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="font-heading text-xl font-semibold tracking-tight text-ink-900">UniPath</span>
+    </a>
+
+    <div id="navPill" class="hidden lg:flex items-center gap-8 bg-white rounded-full pl-7 pr-2 py-2 shadow-[0_10px_30px_-10px_rgba(17,17,17,0.16)] transition-shadow">
+      <nav class="flex items-center gap-7 text-[15px] font-medium text-ink-700">
+        <a href="#home" class="hover:text-brand-600 transition">Home</a>
+        <a href="#destinations" class="hover:text-brand-600 transition">Destinations</a>
+        <a href="#services" class="hover:text-brand-600 transition">Services</a>
+        <a href="#pricing" class="hover:text-brand-600 transition">Pricing</a>
+        <a href="#faq" class="hover:text-brand-600 transition">FAQ</a>
+      </nav>
+      <button onclick="scrollToId('pricing')" class="inline-flex items-center gap-2 rounded-2xl bg-ink-900 hover:bg-black text-white text-sm font-semibold pl-5 pr-4 py-2.5 transition">
+        Book Consultation
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M7 7h10v10M17 7 7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <button id="mobileMenuBtn" class="lg:hidden inline-flex items-center justify-center h-11 w-11 rounded-full bg-white shadow-[0_10px_30px_-10px_rgba(17,17,17,0.16)]" aria-label="Toggle menu">
+      <svg id="iconMenu" class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg id="iconClose" class="h-5 w-5 hidden" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="lg:hidden hidden mx-4 mt-3 rounded-3xl border border-gray-100 bg-white shadow-soft px-5 py-4 space-y-1">
+    <a href="#home" class="mobile-link block px-2 py-2.5 rounded-lg font-medium text-ink-800 hover:bg-brand-50">Home</a>
+    <a href="#destinations" class="mobile-link block px-2 py-2.5 rounded-lg font-medium text-ink-800 hover:bg-brand-50">Destinations</a>
+    <a href="#services" class="mobile-link block px-2 py-2.5 rounded-lg font-medium text-ink-800 hover:bg-brand-50">Services</a>
+    <a href="#pricing" class="mobile-link block px-2 py-2.5 rounded-lg font-medium text-ink-800 hover:bg-brand-50">Pricing</a>
+    <a href="#faq" class="mobile-link block px-2 py-2.5 rounded-lg font-medium text-ink-800 hover:bg-brand-50">FAQ</a>
+    <a href="#contact" class="mobile-link block px-2 py-2.5 rounded-lg font-medium text-ink-800 hover:bg-brand-50">Contact</a>
+    <button onclick="openBookingModal('discovery')" class="w-full text-left px-2 py-2.5 rounded-lg font-medium text-brand-600 hover:bg-brand-50">Free Discovery Call</button>
+    <button onclick="scrollToId('pricing')" class="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-900 text-white text-sm font-semibold px-5 py-3">Book Consultation</button>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="home" class="hero-gradient pt-32 pb-20 lg:pt-40 lg:pb-28 px-5 sm:px-8">
+  <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
+    <div class="max-w-3xl mx-auto flex flex-col items-center">
+      <h1 class="reveal font-heading text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.1]" style="animation-delay:.05s">
+        <span class="sm:hidden"><span class="text-brand-500">Harvard, Oxford &amp; Toronto</span> alumni guide your admission</span>
+        <span class="hidden sm:inline">Alumni from <span class="text-brand-500">Harvard, Oxford &amp; Toronto</span> guide you to your admission</span>
+      </h1>
+      <p class="reveal mt-6 text-lg sm:text-xl max-w-2xl leading-relaxed mx-auto" style="animation-delay:.12s">
+        Personal statements, applications, strategy, mock interviews — we build every step together, at a price four times lower than traditional consultancies.
+      </p>
+
+      <div class="reveal mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-3" style="animation-delay:.16s">
+        <span class="inline-flex items-center gap-2 text-sm font-semibold text-ink-800">
+          <span class="inline-flex h-5 w-5 items-center justify-center rounded-full border-2 border-brand-500 text-brand-500">
+            <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none"><path d="M4 12.5 9.5 18 20 6.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Ultra-personalized
+        </span>
+        <span class="inline-flex items-center gap-2 text-sm font-semibold text-ink-800">
+          <span class="inline-flex h-5 w-5 items-center justify-center rounded-full border-2 border-brand-500 text-brand-500">
+            <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none"><path d="M4 12.5 9.5 18 20 6.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Proven results
+        </span>
+        <span class="inline-flex items-center gap-2 text-sm font-semibold text-ink-800">
+          <span class="inline-flex h-5 w-5 items-center justify-center rounded-full border-2 border-brand-500 text-brand-500">
+            <svg class="h-2.5 w-2.5" viewBox="0 0 24 24" fill="none"><path d="M4 12.5 9.5 18 20 6.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          Student-friendly pricing
+        </span>
+      </div>
+
+      <div class="reveal mt-9 flex flex-col sm:flex-row gap-4 justify-center" style="animation-delay:.2s">
+        <button onclick="scrollToId('pricing')" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-900 hover:bg-black text-white font-semibold px-7 py-3.5 shadow-soft transition">
+          Explore Packages
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M7 7h10v10M17 7 7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button onclick="openBookingModal('discovery')" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-gray-200 hover:border-brand-300 text-ink-900 font-semibold px-7 py-3.5 shadow-card transition">
+          Book Free Consultation
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M7 7h10v10M17 7 7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="reveal mt-14 grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-10 max-w-2xl mx-auto text-center" style="animation-delay:.28s">
+        <div>
+          <p class="font-heading text-3xl font-semibold text-ink-900">4<span class="text-brand-500">x</span></p>
+          <p class="text-sm mt-1">Cheaper than the market</p>
+        </div>
+        <div>
+          <p class="font-heading text-3xl font-semibold text-ink-900">100<span class="text-brand-500">+</span></p>
+          <p class="text-sm mt-1">Students mentored</p>
+        </div>
+        <div>
+          <p class="font-heading text-3xl font-semibold text-ink-900">600<span class="text-brand-500">h+</span></p>
+          <p class="text-sm mt-1">Accumulated expertise</p>
+        </div>
+        <div>
+          <p class="font-heading text-3xl font-semibold text-ink-900">7<span class="text-brand-500">/7</span></p>
+          <p class="text-sm mt-1">Support &amp; follow-up</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DESTINATIONS ============ -->
+<section id="destinations" class="py-24 px-5 sm:px-8 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-2xl reveal">
+      <p class="text-sm font-bold uppercase tracking-widest text-brand-600">Where you could go</p>
+      <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">Top study destinations</h2>
+      <p class="mt-4 text-ink-700/75 text-lg">Pick a destination to see it reflected in your consultation booking — our mentors specialize by country.</p>
+    </div>
+
+    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="destinationGrid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHODOLOGY / SERVICES ============ -->
+<section id="services" class="py-24 px-5 sm:px-8 bg-gray-50">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-2xl reveal">
+      <p class="text-sm font-bold uppercase tracking-widest text-brand-600">Our method</p>
+      <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">Personalized solutions for every student</h2>
+      <p class="mt-4 text-ink-700/75 text-lg">UniPath supports you at every step of your admission, with a simple, clear method validated by former recruiters and alumni of Harvard, Oxford, and Toronto.</p>
+    </div>
+
+    <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-5 gap-5">
+      <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card card-hover">
+        <div class="h-11 w-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">01</div>
+        <h3 class="mt-5 font-semibold text-lg">Profile &amp; Goal Assessment</h3>
+        <p class="mt-2 text-sm text-ink-700/70 leading-relaxed">We map your academic profile, budget, and goals to define a realistic shortlist strategy.</p>
+      </div>
+      <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card card-hover" style="animation-delay:.05s">
+        <div class="h-11 w-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">02</div>
+        <h3 class="mt-5 font-semibold text-lg">University Shortlisting</h3>
+        <p class="mt-2 text-sm text-ink-700/70 leading-relaxed">Reach, match, and safety schools aligned to your goals, with clear deadlines and requirements.</p>
+      </div>
+      <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card card-hover" style="animation-delay:.1s">
+        <div class="h-11 w-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">03</div>
+        <h3 class="mt-5 font-semibold text-lg">SOP, Essays &amp; Application</h3>
+        <p class="mt-2 text-sm text-ink-700/70 leading-relaxed">Expert-reviewed statements and applications that make your story stand out.</p>
+      </div>
+      <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card card-hover" style="animation-delay:.15s">
+        <div class="h-11 w-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">04</div>
+        <h3 class="mt-5 font-semibold text-lg">Visa Coaching &amp; Mock Interviews</h3>
+        <p class="mt-2 text-sm text-ink-700/70 leading-relaxed">Real practice, documentation review, and 1-on-1 coaching from visa specialists.</p>
+      </div>
+      <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card card-hover" style="animation-delay:.2s">
+        <div class="h-11 w-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold">05</div>
+        <h3 class="mt-5 font-semibold text-lg">Pre-Departure Support</h3>
+        <p class="mt-2 text-sm text-ink-700/70 leading-relaxed">Housing guidance, orientation, and ongoing support once you land on campus.</p>
+      </div>
+    </div>
+
+    <!-- Why choose us -->
+    <div class="mt-24 grid lg:grid-cols-2 gap-14 items-start">
+      <div class="reveal">
+        <p class="text-sm font-bold uppercase tracking-widest text-brand-600">Why UniPath</p>
+        <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">The alternative to overpriced, impersonal agencies</h2>
+        <p class="mt-4 text-ink-700/75 text-lg leading-relaxed">We give you the same caliber of guidance elite consultancies charge thousands for — at a fraction of the price, with mentors who've actually done it.</p>
+        <div class="mt-8 grid grid-cols-2 gap-6">
+          <div><p class="text-2xl font-semibold">4x</p><p class="text-sm text-ink-700/70">Cheaper than the market</p></div>
+          <div><p class="text-2xl font-semibold">100+</p><p class="text-sm text-ink-700/70">Students mentored</p></div>
+          <div><p class="text-2xl font-semibold">600h+</p><p class="text-sm text-ink-700/70">Accumulated expertise</p></div>
+          <div><p class="text-2xl font-semibold">7/7</p><p class="text-sm text-ink-700/70">Support &amp; follow-up</p></div>
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card">
+          <h4 class="font-semibold">Guided by Alumni Mentors</h4>
+          <p class="mt-2 text-sm text-ink-700/70">Passed through Harvard, Oxford, Toronto — they know exactly what each school expects.</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card" style="animation-delay:.05s">
+          <h4 class="font-semibold">Fast &amp; Effective</h4>
+          <p class="mt-2 text-sm text-ink-700/70">Simple, direct, 100% online — we help you at every key step.</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card" style="animation-delay:.1s">
+          <h4 class="font-semibold">Matched to Your Profile</h4>
+          <p class="mt-2 text-sm text-ink-700/70">A tailor-made path — your plan adjusts weekly to your level, pace, and feedback.</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card" style="animation-delay:.15s">
+          <h4 class="font-semibold">Proven Results</h4>
+          <p class="mt-2 text-sm text-ink-700/70">Real admissions every year into the world's best universities.</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card" style="animation-delay:.2s">
+          <h4 class="font-semibold">Built for You</h4>
+          <p class="mt-2 text-sm text-ink-700/70">Clear tools, real templates, and human support at every moment.</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-6 border border-gray-100 shadow-card" style="animation-delay:.25s">
+          <h4 class="font-semibold">Created by Those Who've Lived It</h4>
+          <p class="mt-2 text-sm text-ink-700/70">Honest guidance, designed by people who went through it — at a fair price.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING / PACKAGES ============ -->
+<section id="pricing" class="py-24 px-5 sm:px-8 bg-white">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-2xl mx-auto text-center reveal">
+      <p class="text-sm font-bold uppercase tracking-widest text-brand-600">Services &amp; pricing</p>
+      <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">Unlock the admission you've been working toward</h2>
+      <p class="mt-4 text-ink-700/75 text-lg">Ready to get started, or still weighing your options? We move at your pace — one-time pricing, no hidden fees, payment securely handled by Stripe.</p>
+    </div>
+
+    <div class="mt-14 grid lg:grid-cols-3 gap-6" id="pricingGrid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="py-24 px-5 sm:px-8 bg-gray-50">
+  <div class="max-w-7xl mx-auto">
+    <div class="max-w-2xl reveal">
+      <p class="text-sm font-bold uppercase tracking-widest text-brand-600">Success stories</p>
+      <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">Students who found their path</h2>
+    </div>
+    <div class="mt-12 grid md:grid-cols-3 gap-6">
+      <div class="reveal bg-white rounded-2xl p-7 border border-gray-100 shadow-card">
+        <div class="flex gap-1 text-brand-500">★★★★★</div>
+        <p class="mt-4 text-ink-700/80 leading-relaxed">"My mentor rewrote my SOP three times until it actually sounded like me. Got into my #1 choice in Toronto."</p>
+        <p class="mt-5 font-bold">Amara O.</p>
+        <p class="text-sm text-ink-700/60">University of Toronto, Canada</p>
+      </div>
+      <div class="reveal bg-white rounded-2xl p-7 border border-gray-100 shadow-card" style="animation-delay:.05s">
+        <div class="flex gap-1 text-brand-500">★★★★★</div>
+        <p class="mt-4 text-ink-700/80 leading-relaxed">"The mock visa interviews were uncannily close to the real thing. I walked in prepared and got approved same day."</p>
+        <p class="mt-5 font-bold">Daniel K.</p>
+        <p class="text-sm text-ink-700/60">University of Manchester, UK</p>
+      </div>
+      <div class="reveal bg-white rounded-2xl p-7 border border-gray-100 shadow-card" style="animation-delay:.1s">
+        <div class="flex gap-1 text-brand-500">★★★★★</div>
+        <p class="mt-4 text-ink-700/80 leading-relaxed">"Four times cheaper than the agency my friend used, and honestly more responsive. Worth every dollar."</p>
+        <p class="mt-5 font-bold">Priya S.</p>
+        <p class="text-sm text-ink-700/60">Arizona State University, USA</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="py-24 px-5 sm:px-8 bg-white">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center reveal">
+      <p class="text-sm font-bold uppercase tracking-widest text-brand-600">FAQ</p>
+      <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">Frequently asked questions</h2>
+    </div>
+    <div class="mt-10 space-y-3" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / CTA ============ -->
+<section id="contact" class="py-20 px-5 sm:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="reveal rounded-3xl bg-ink-900 text-white px-6 sm:px-14 py-14 sm:py-16 grid lg:grid-cols-2 gap-10 items-center overflow-hidden relative">
+      <div class="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-brand-500/20 blur-3xl"></div>
+      <div>
+        <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight">Still deciding? Let's talk it through.</h2>
+        <p class="mt-4 text-white/70 text-lg leading-relaxed">Book a free, no-obligation 15-minute call with a UniPath mentor. We'll review your profile, target programs, and answer every question.</p>
+        <ul class="mt-6 space-y-3 text-white/85">
+          <li class="flex gap-3 items-start"><span class="check-icon mt-0.5"></span>Profile &amp; project analysis</li>
+          <li class="flex gap-3 items-start"><span class="check-icon mt-0.5"></span>Program shortlist suggestions</li>
+          <li class="flex gap-3 items-start"><span class="check-icon mt-0.5"></span>A clear read on what's holding you back</li>
+          <li class="flex gap-3 items-start"><span class="check-icon mt-0.5"></span>Answers to all your questions</li>
+        </ul>
+        <button onclick="openBookingModal('discovery')" class="mt-8 inline-flex items-center gap-2 rounded-2xl bg-brand-500 hover:bg-brand-600 text-white font-semibold px-7 py-4 transition">
+          Book Free Consultation
+        </button>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <p class="text-sm text-white/60">Email us</p>
+          <p class="mt-1 font-semibold">hello@unipath.education</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <p class="text-sm text-white/60">Call us</p>
+          <p class="mt-1 font-semibold">+1 (555) 019-2837</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <p class="text-sm text-white/60">Support</p>
+          <p class="mt-1 font-semibold">7 days a week</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+          <p class="text-sm text-white/60">Response time</p>
+          <p class="mt-1 font-semibold">Under 24 hours</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-gray-50 border-t border-gray-100 px-5 sm:px-8 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-5 gap-10">
+    <div class="lg:col-span-2">
+      <a href="#home" class="flex items-center gap-2">
+        <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-ink-900 text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5">
+            <path d="M12 2 2 7l10 5 10-5-10-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M6 10.5V16c0 1.5 2.7 3.5 6 3.5s6-2 6-3.5v-5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="text-xl font-semibold tracking-tight">UniPath</span>
+      </a>
+      <p class="mt-4 text-sm text-ink-700/70 max-w-xs leading-relaxed">Study abroad consultancy helping students navigate applications, visas, and admissions into top global universities.</p>
+    </div>
+    <div>
+      <p class="font-bold text-sm">Company</p>
+      <ul class="mt-4 space-y-2.5 text-sm text-ink-700/70">
+        <li><a href="#home" class="hover:text-brand-600">Home</a></li>
+        <li><a href="#destinations" class="hover:text-brand-600">Destinations</a></li>
+        <li><a href="#services" class="hover:text-brand-600">Services</a></li>
+        <li><a href="#faq" class="hover:text-brand-600">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-sm">Packages</p>
+      <ul class="mt-4 space-y-2.5 text-sm text-ink-700/70">
+        <li><a href="#pricing" class="hover:text-brand-600">Standard Review</a></li>
+        <li><a href="#pricing" class="hover:text-brand-600">VIP Visa Coaching</a></li>
+        <li><a href="#pricing" class="hover:text-brand-600">End-to-End Pack</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-sm">Legal</p>
+      <ul class="mt-4 space-y-2.5 text-sm text-ink-700/70">
+        <li><a href="#" class="hover:text-brand-600">Terms of Service</a></li>
+        <li><a href="#" class="hover:text-brand-600">Privacy Policy</a></li>
+        <li><a href="#" class="hover:text-brand-600">Refund Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto mt-12 pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between gap-3 text-sm text-ink-700/60">
+    <p>&copy; <span id="year"></span> UniPath Education. All rights reserved.</p>
+    <p>Made for students chasing an education without borders.</p>
+  </div>
+</footer>
+
+<!-- ============ BOOKING / CHECKOUT MODAL ============ -->
+<div id="bookingModal" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 modal-backdrop" onclick="closeBookingModal()"></div>
+
+  <div class="relative h-full flex items-start sm:items-center justify-center p-0 sm:p-4 overflow-y-auto">
+    <div class="animate-popIn bg-white w-full sm:max-w-2xl sm:rounded-3xl shadow-2xl min-h-full sm:min-h-0 flex flex-col">
+
+      <!-- Modal header -->
+      <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest text-brand-600">Book your package</p>
+          <h3 class="text-lg font-semibold" id="modalTitle">Complete your booking</h3>
+        </div>
+        <button onclick="closeBookingModal()" class="h-9 w-9 rounded-full hover:bg-gray-100 flex items-center justify-center" aria-label="Close">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Stepper -->
+      <div class="px-6 sm:px-8 pt-5" id="stepperWrap">
+        <div class="flex items-center">
+          <div class="step-dot" data-step="1">1</div>
+          <div class="flex-1 h-0.5 bg-gray-200 mx-2 step-line" data-line="1"></div>
+          <div class="step-dot" data-step="2">2</div>
+          <div class="flex-1 h-0.5 bg-gray-200 mx-2 step-line" data-line="2"></div>
+          <div class="step-dot" data-step="3">3</div>
+          <div class="flex-1 h-0.5 bg-gray-200 mx-2 step-line" data-line="3"></div>
+          <div class="step-dot" data-step="4">4</div>
+        </div>
+        <div class="flex justify-between mt-2 text-[11px] font-semibold text-ink-700/60 px-0.5">
+          <span>Review</span><span>Details</span><span>Payment</span><span>Confirmed</span>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="px-6 sm:px-8 py-6 flex-1">
+
+        <!-- STEP 1: ORDER REVIEW -->
+        <div id="step1" class="step-panel">
+          <div id="orderSummaryCard" class="rounded-2xl border border-gray-100 bg-gray-50 p-5"></div>
+
+          <div class="mt-5">
+            <p class="font-bold text-sm mb-3">Optional add-ons</p>
+            <div class="space-y-2" id="addonsList"></div>
+          </div>
+
+          <div class="mt-6 flex items-center justify-between rounded-xl bg-brand-50 border border-brand-100 px-5 py-4">
+            <span class="font-semibold text-ink-800">Total due today</span>
+            <span class="text-2xl font-semibold text-brand-700" id="totalStep1">$0</span>
+          </div>
+        </div>
+
+        <!-- STEP 2: STUDENT DETAILS -->
+        <div id="step2" class="step-panel hidden">
+          <form id="detailsForm" class="grid sm:grid-cols-2 gap-4" novalidate>
+            <div class="sm:col-span-2">
+              <label class="text-sm font-semibold">Full name</label>
+              <input required name="fullName" type="text" placeholder="Jordan Lee" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
+              <p class="err-msg"></p>
+            </div>
+            <div>
+              <label class="text-sm font-semibold">Email address</label>
+              <input required name="email" type="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
+              <p class="err-msg"></p>
+            </div>
+            <div>
+              <label class="text-sm font-semibold">Phone number</label>
+              <input required name="phone" type="tel" placeholder="+1 555 123 4567" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
+              <p class="err-msg"></p>
+            </div>
+            <div>
+              <label class="text-sm font-semibold">Destination country</label>
+              <select required name="destination" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
+                <option value="">Select a country</option>
+                <option value="USA">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="Other">Other / Not sure yet</option>
+              </select>
+              <p class="err-msg"></p>
+            </div>
+            <div>
+              <label class="text-sm font-semibold">Target intake</label>
+              <select required name="intake" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
+                <option value="">Select intake</option>
+                <option>Fall 2026</option>
+                <option>Spring 2027</option>
+                <option>Fall 2027</option>
+              </select>
+              <p class="err-msg"></p>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="text-sm font-semibold">Notes for your mentor <span class="text-ink-700/50 font-normal">(optional)</span></label>
+              <textarea name="notes" rows="3" placeholder="Tell us about your goals, current status, or questions..." class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+            </div>
+          </form>
+        </div>
+
+        <!-- STEP 3: PAYMENT (redirects to Stripe Checkout) -->
+        <div id="step3" class="step-panel hidden">
+          <div class="rounded-xl bg-gray-50 border border-gray-100 px-5 py-3.5 flex items-center justify-between mb-5">
+            <span class="text-sm font-semibold text-ink-700/80" id="payingForLabel">Paying for package</span>
+            <span class="font-semibold text-brand-700" id="totalStep3">$0</span>
+          </div>
+
+          <div class="rounded-2xl border border-gray-100 p-6 text-center bg-white">
+            <div class="mx-auto h-12 w-12 rounded-full bg-brand-50 flex items-center justify-center">
+              <svg id="paymentIcon" class="h-6 w-6 text-brand-600" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.6"/></svg>
+            </div>
+            <p class="mt-4 font-semibold" id="paymentTitle">You'll be redirected to Stripe's secure checkout</p>
+            <p class="mt-1.5 text-sm text-ink-700/65 max-w-sm mx-auto" id="paymentSubtitle">Enter your card details on Stripe's encrypted payment page. UniPath never sees or stores your card information.</p>
+          </div>
+
+          <form id="paymentForm" class="mt-5" novalidate>
+            <label class="flex items-start gap-2.5 text-sm text-ink-700/75">
+              <input required name="terms" type="checkbox" class="mt-1 h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-400" />
+              I agree to the Terms of Service and Refund Policy.
+            </label>
+            <p class="err-msg" data-for="terms"></p>
+          </form>
+        </div>
+
+        <!-- STEP 4: SUCCESS -->
+        <div id="step4" class="step-panel hidden text-center py-4">
+          <div class="mx-auto h-16 w-16 rounded-full bg-green-100 flex items-center justify-center">
+            <svg class="h-9 w-9 text-green-600" viewBox="0 0 24 24" fill="none">
+              <path d="M4 12.5 9.5 18 20 6.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="48" class="animate-checkDraw"/>
+            </svg>
+          </div>
+          <h3 class="mt-5 text-2xl font-semibold">Booking confirmed!</h3>
+          <p class="mt-2 text-ink-700/70 max-w-sm mx-auto">Your payment was received by Stripe. A confirmation email is on its way, and your mentor will reach out within 24 hours.</p>
+
+          <div class="mt-6 text-left rounded-2xl border border-gray-100 bg-gray-50 p-5 max-w-md mx-auto space-y-2.5 text-sm" id="successSummary"></div>
+
+          <button onclick="closeBookingModal()" class="mt-7 inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-900 hover:bg-black text-white font-semibold px-7 py-3.5 transition">
+            Done
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer nav buttons -->
+      <div id="modalFooter" class="px-6 sm:px-8 py-5 border-t border-gray-100 flex items-center justify-between gap-3">
+        <button id="backBtn" onclick="prevStep()" class="text-sm font-semibold text-ink-700/70 hover:text-ink-900 px-2 py-2">Back</button>
+        <button id="nextBtn" onclick="nextStep()" class="ml-auto inline-flex items-center gap-2 rounded-2xl bg-brand-500 hover:bg-brand-600 text-white font-semibold px-7 py-3.5 transition">
+          Continue
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] hidden">
+  <div class="bg-ink-900 text-white text-sm font-medium px-5 py-3 rounded-full shadow-soft"></div>
+</div>
+
+<style>
+  .step-dot {
+    height: 2rem; width: 2rem; border-radius: 9999px; display:flex; align-items:center; justify-content:center;
+    font-size: .8rem; font-weight: 700; border: 2px solid #e5e7eb; color:#9ca3af; background:#fff; flex-shrink:0;
+    transition: all .3s ease;
+  }
+  .step-dot.active { border-color:#f97316; color:#fff; background:#f97316; }
+  .step-dot.done { border-color:#111827; color:#fff; background:#111827; }
+  .check-icon { display:inline-block; width:18px; height:18px; border-radius:9999px; background:#f97316; position:relative; flex-shrink:0; }
+  .check-icon::after { content:''; position:absolute; left:5px; top:2px; width:5px; height:9px; border:solid white; border-width:0 2px 2px 0; transform:rotate(45deg); }
+</style>
+
+<script>
+/* ============ DATA (fetched from /pricing.json — server is the source of truth for prices) ============ */
+let PACKAGES = {};
+let ADDONS = [];
+
+/* ============ STATE ============ */
+let state = {
+  packageId: null,
+  addons: [],
+  step: 1,
+  destinationPick: '',
+};
+
+/* ============ RENDER: DESTINATIONS ============ */
+const DESTINATIONS = [
+  { code:'USA', name:'United States', emoji:'🇺🇸', unis:'12+ partner universities', blurb:'Ivy League to state flagships — the widest range of programs and funding options.' },
+  { code:'UK', name:'United Kingdom', emoji:'🇬🇧', unis:'15+ partner universities', blurb:'1-year master\'s programs and centuries-old institutions across the UK.' },
+  { code:'Canada', name:'Canada', emoji:'🇨🇦', unis:'10+ partner universities', blurb:'Strong post-study work visas and some of the friendliest immigration pathways.' },
+  { code:'Australia', name:'Australia', emoji:'🇦🇺', unis:'13+ partner universities', blurb:'World-class research universities with generous scholarship programs.' },
+];
+
+function renderDestinations(){
+  const grid = document.getElementById('destinationGrid');
+  grid.innerHTML = DESTINATIONS.map((d,i) => `
+    <button onclick="pickDestination('${d.code}')" class="reveal text-left group bg-white rounded-2xl border border-gray-100 shadow-card card-hover p-6" style="animation-delay:${i*0.05}s">
+      <div class="text-4xl">${d.emoji}</div>
+      <h3 class="mt-4 font-semibold text-lg">${d.name}</h3>
+      <p class="mt-1 text-xs font-semibold text-brand-600">${d.unis}</p>
+      <p class="mt-3 text-sm text-ink-700/70 leading-relaxed">${d.blurb}</p>
+      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-ink-900 group-hover:text-brand-600 transition">
+        Explore pathway
+        <svg class="h-3.5 w-3.5 group-hover:translate-x-1 transition" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </button>
+  `).join('');
+  document.querySelectorAll('#destinationGrid .reveal').forEach(el => io.observe(el));
+}
+
+function pickDestination(code){
+  state.destinationPick = code;
+  showToast(`Great choice — we'll pre-fill ${code} in your booking form.`);
+  scrollToId('pricing');
+}
+
+/* ============ RENDER: PRICING ============ */
+function renderPricing(){
+  const grid = document.getElementById('pricingGrid');
+  const order = ['standard','vip','complete'];
+  grid.innerHTML = order.map((key,i) => {
+    const p = PACKAGES[key];
+    const popular = p.badge === 'Most Popular';
+    return `
+      <div class="reveal relative rounded-3xl p-7 border ${popular ? 'border-ink-900 shadow-soft scale-[1.02]' : 'border-gray-100 shadow-card'} bg-white card-hover flex flex-col" style="animation-delay:${i*0.08}s">
+        ${p.badge ? `<span class="absolute -top-3 left-7 text-xs font-bold px-3 py-1 rounded-full ${popular ? 'bg-ink-900 text-white' : 'bg-brand-500 text-white'}">${p.badge}</span>` : ''}
+        <h3 class="font-semibold text-xl mt-2">${p.name}</h3>
+        <p class="mt-2 text-sm text-ink-700/70 leading-relaxed min-h-[3rem]">${p.tagline}</p>
+        <div class="mt-5 flex items-baseline gap-1">
+          <span class="text-4xl font-semibold">$${p.price}</span>
+          <span class="text-sm text-ink-700/60">one-time</span>
+        </div>
+        <ul class="mt-6 space-y-3 text-sm flex-1">
+          ${p.features.map(f => `<li class="flex gap-2.5"><span class="check-icon mt-0.5"></span><span class="text-ink-700/85">${f}</span></li>`).join('')}
+        </ul>
+        <button onclick="openBookingModal('${p.id}')" class="mt-7 w-full inline-flex items-center justify-center gap-2 rounded-2xl ${popular ? 'bg-brand-500 hover:bg-brand-600 text-white' : 'bg-ink-900 hover:bg-black text-white'} font-semibold px-6 py-3.5 transition">
+          Select Package
+        </button>
+      </div>
+    `;
+  }).join('');
+  document.querySelectorAll('#pricingGrid .reveal').forEach(el => io.observe(el));
+}
+
+/* ============ RENDER: FAQ ============ */
+const FAQS = [
+  { q:'What\'s included in each package?', a:'Every package includes clearly listed deliverables shown on the pricing card — from single document reviews to full end-to-end application and visa support. You can see the exact feature list before you book.' },
+  { q:'Can I upgrade my package later?', a:'Yes. If you start with Standard Review or VIP Coaching and want more support later, we credit what you\'ve already paid toward the higher package.' },
+  { q:'What is your refund policy?', a:'Full refund if your mentor hasn\'t started work yet. Partial refunds are available on a case-by-case basis after work has begun — details are in our Refund Policy.' },
+  { q:'How long does visa processing take?', a:'It varies by country and season, generally 2-8 weeks. Your mentor will give you a realistic timeline specific to your destination and visa type during onboarding.' },
+  { q:'Do you guarantee admission?', a:'No consultancy can ethically guarantee admission — outcomes depend on your profile. What we guarantee is expert-level guidance, honest feedback, and maximum effort on every deliverable.' },
+];
+
+function renderFAQ(){
+  const list = document.getElementById('faqList');
+  list.innerHTML = FAQS.map((f,i) => `
+    <div class="reveal border border-gray-100 rounded-2xl overflow-hidden" style="animation-delay:${i*0.04}s">
+      <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between gap-4 px-5 py-4 text-left bg-gray-50 hover:bg-gray-100 transition">
+        <span class="font-semibold">${f.q}</span>
+        <svg id="faqIcon${i}" class="h-4 w-4 shrink-0 transition-transform" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div id="faqContent${i}" class="accordion-content px-5 bg-white">
+        <p class="py-4 text-sm text-ink-700/75 leading-relaxed">${f.a}</p>
+      </div>
+    </div>
+  `).join('');
+  document.querySelectorAll('#faqList .reveal').forEach(el => io.observe(el));
+}
+
+function toggleFaq(i){
+  const content = document.getElementById(`faqContent${i}`);
+  const icon = document.getElementById(`faqIcon${i}`);
+  const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+  document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = '0px');
+  document.querySelectorAll('[id^="faqIcon"]').forEach(el => el.style.transform = 'rotate(0deg)');
+  if (!isOpen){
+    content.style.maxHeight = content.scrollHeight + 'px';
+    icon.style.transform = 'rotate(180deg)';
+  }
+}
+
+/* ============ MOBILE NAV ============ */
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+mobileMenuBtn.addEventListener('click', () => {
+  const isHidden = mobileMenu.classList.contains('hidden');
+  mobileMenu.classList.toggle('hidden');
+  document.getElementById('iconMenu').classList.toggle('hidden', isHidden);
+  document.getElementById('iconClose').classList.toggle('hidden', !isHidden);
+});
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    document.getElementById('iconMenu').classList.remove('hidden');
+    document.getElementById('iconClose').classList.add('hidden');
+  });
+});
+
+function scrollToId(id){
+  document.getElementById(id)?.scrollIntoView({ behavior:'smooth' });
+}
+
+/* ============ SCROLL REVEAL ============ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+/* ============ TOAST ============ */
+let toastTimer;
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  toast.querySelector('div').textContent = msg;
+  toast.classList.remove('hidden');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.add('hidden'), 3200);
+}
+
+/* ============ BOOKING MODAL ============ */
+function calcTotal(){
+  const pkg = PACKAGES[state.packageId];
+  const addonsTotal = state.addons.reduce((sum, id) => sum + ADDONS.find(a => a.id === id).price, 0);
+  return pkg.price + addonsTotal;
+}
+
+function openBookingModal(packageId){
+  state.packageId = packageId;
+  state.addons = [];
+  state.step = 1;
+  document.getElementById('bookingModal').classList.remove('hidden');
+  document.getElementById('stepperWrap').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  renderStep1();
+  goToStep(1);
+}
+
+function closeBookingModal(){
+  document.getElementById('bookingModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function renderStep1(){
+  const pkg = PACKAGES[state.packageId];
+  document.getElementById('orderSummaryCard').innerHTML = `
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <p class="font-semibold text-lg">${pkg.name}</p>
+        <p class="text-sm text-ink-700/70 mt-1">${pkg.tagline}</p>
+      </div>
+      <span class="text-xl font-semibold whitespace-nowrap">$${pkg.price}</span>
+    </div>
+    <ul class="mt-4 space-y-2">
+      ${pkg.features.map(f => `<li class="flex gap-2 text-sm text-ink-700/80"><span class="check-icon mt-0.5"></span>${f}</li>`).join('')}
+    </ul>
+  `;
+
+  const showAddons = pkg.price > 0;
+  document.getElementById('addonsList').parentElement.style.display = showAddons ? 'block' : 'none';
+  document.getElementById('addonsList').innerHTML = ADDONS.map(a => `
+    <label class="flex items-center justify-between gap-3 rounded-xl border border-gray-200 px-4 py-3 cursor-pointer hover:border-brand-300 transition">
+      <span class="flex items-center gap-3">
+        <input type="checkbox" onchange="toggleAddon('${a.id}')" ${state.addons.includes(a.id) ? 'checked' : ''} class="h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-400" />
+        <span class="text-sm font-medium">${a.label}</span>
+      </span>
+      <span class="text-sm font-bold text-ink-700/80">+$${a.price}</span>
+    </label>
+  `).join('');
+
+  updateTotals();
+}
+
+function toggleAddon(id){
+  if (state.addons.includes(id)) state.addons = state.addons.filter(a => a !== id);
+  else state.addons.push(id);
+  updateTotals();
+}
+
+function updateTotals(){
+  const total = calcTotal();
+  document.getElementById('totalStep1').textContent = `$${total}`;
+  document.getElementById('totalStep3').textContent = `$${total}`;
+}
+
+function goToStep(n){
+  state.step = n;
+  for (let i=1;i<=4;i++){
+    document.getElementById(`step${i}`).classList.toggle('hidden', i !== n);
+  }
+  document.querySelectorAll('.step-dot').forEach(dot => {
+    const s = Number(dot.dataset.step);
+    dot.classList.remove('active','done');
+    if (s < n) dot.classList.add('done');
+    else if (s === n) dot.classList.add('active');
+  });
+  document.querySelectorAll('.step-line').forEach(line => {
+    const s = Number(line.dataset.line);
+    line.style.backgroundColor = s < n ? '#111827' : '#e5e7eb';
+  });
+
+  const footer = document.getElementById('modalFooter');
+  const backBtn = document.getElementById('backBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  const isFree = calcTotal() === 0;
+
+  if (n === 4){
+    footer.classList.add('hidden');
+  } else {
+    footer.classList.remove('hidden');
+    backBtn.style.visibility = n === 1 ? 'hidden' : 'visible';
+    nextBtn.innerHTML = n === 3
+      ? (isFree
+          ? `Confirm Free Booking <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+          : `Continue to Secure Payment <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`)
+      : `Continue <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    nextBtn.disabled = false;
+  }
+
+  if (n === 2) prefillDestination();
+  if (n === 3) {
+    document.getElementById('payingForLabel').textContent = `Paying for: ${PACKAGES[state.packageId].name}`;
+    const icon = document.getElementById('paymentIcon');
+    const title = document.getElementById('paymentTitle');
+    const subtitle = document.getElementById('paymentSubtitle');
+    if (isFree){
+      icon.innerHTML = '<path d="M4 12.5 9.5 18 20 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>';
+      title.textContent = 'No payment required for this call';
+      subtitle.textContent = 'Just confirm your details and a UniPath mentor will reach out to schedule your free 15-minute consultation.';
+    } else {
+      icon.innerHTML = '<rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.6"/>';
+      title.textContent = "You'll be redirected to Stripe's secure checkout";
+      subtitle.textContent = "Enter your card details on Stripe's encrypted payment page. UniPath never sees or stores your card information.";
+    }
+  }
+
+  const scrollBox = document.querySelector('#bookingModal .overflow-y-auto');
+  if (scrollBox) scrollBox.scrollTop = 0;
+}
+
+function prefillDestination(){
+  if (!state.destinationPick) return;
+  const select = document.querySelector('#detailsForm [name="destination"]');
+  if (select && !select.value) select.value = state.destinationPick;
+}
+
+function nextStep(){
+  if (state.step === 1){
+    goToStep(2);
+  } else if (state.step === 2){
+    if (validateForm('detailsForm')) goToStep(3);
+  } else if (state.step === 3){
+    if (!validateForm('paymentForm')) return;
+    if (calcTotal() === 0) confirmFreeBooking();
+    else goToStripeCheckout();
+  }
+}
+
+/* Free packages (e.g. the discovery call) skip Stripe entirely — Checkout Sessions
+   in payment mode reject a $0 total, and no payment is needed anyway. */
+function confirmFreeBooking(){
+  const pkg = PACKAGES[state.packageId];
+  const student = Object.fromEntries(new FormData(document.getElementById('detailsForm')));
+  const reference = 'UP-' + Math.random().toString(36).slice(2, 10).toUpperCase();
+
+  document.getElementById('successSummary').innerHTML = `
+    <div class="flex justify-between"><span class="text-ink-700/60">Booking reference</span><span class="font-bold">${reference}</span></div>
+    <div class="flex justify-between"><span class="text-ink-700/60">Package</span><span class="font-semibold">${pkg.name}</span></div>
+    <div class="flex justify-between"><span class="text-ink-700/60">Student</span><span class="font-semibold">${student.fullName || '—'}</span></div>
+    <div class="flex justify-between"><span class="text-ink-700/60">Destination</span><span class="font-semibold">${student.destination || '—'}</span></div>
+    <div class="flex justify-between"><span class="text-ink-700/60">Intake</span><span class="font-semibold">${student.intake || '—'}</span></div>
+    <div class="flex justify-between pt-2 border-t border-gray-200"><span class="font-bold">Total due</span><span class="font-extrabold text-brand-700">Free — no payment required</span></div>
+  `;
+  goToStep(4);
+}
+
+function prevStep(){
+  if (state.step > 1) goToStep(state.step - 1);
+}
+
+/* ============ VALIDATION ============ */
+function validateForm(formId){
+  const form = document.getElementById(formId);
+  let valid = true;
+  const fields = form.querySelectorAll('input, select, textarea');
+
+  fields.forEach(f => f.classList.remove('touched'));
+  form.querySelectorAll('.err-msg').forEach(e => e.textContent = '');
+
+  fields.forEach(field => {
+    if (!field.hasAttribute('required')) return;
+    field.classList.add('touched');
+    let ok = true;
+    let msg = 'This field is required.';
+
+    if (field.type === 'checkbox'){
+      ok = field.checked;
+      msg = 'You must accept to continue.';
+    } else if (!field.value.trim()){
+      ok = false;
+    } else if (field.type === 'email'){
+      ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+      msg = 'Enter a valid email address.';
+    } else if (field.name === 'phone'){
+      ok = /^[+\d][\d\s-]{6,}$/.test(field.value);
+      msg = 'Enter a valid phone number.';
+    }
+
+    if (!ok){
+      valid = false;
+      const errEl = field.parentElement.querySelector('.err-msg') ||
+                    form.querySelector(`.err-msg[data-for="${field.name}"]`);
+      if (errEl) errEl.textContent = msg;
+      field.classList.add('border-red-400');
+    } else {
+      field.classList.remove('border-red-400');
+    }
+  });
+
+  return valid;
+}
+
+/* ============ STRIPE CHECKOUT ============ */
+async function goToStripeCheckout(){
+  const nextBtn = document.getElementById('nextBtn');
+  const originalHTML = nextBtn.innerHTML;
+  nextBtn.disabled = true;
+  nextBtn.innerHTML = `<span class="h-4 w-4 rounded-full border-2 border-white/40 spinner"></span> Redirecting to Stripe...`;
+
+  const student = Object.fromEntries(new FormData(document.getElementById('detailsForm')));
+
+  try {
+    const res = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ packageId: state.packageId, addons: state.addons, student }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Could not start checkout.');
+    window.location.href = data.url;
+  } catch (err) {
+    nextBtn.disabled = false;
+    nextBtn.innerHTML = originalHTML;
+    showToast(err.message);
+  }
+}
+
+/* Handle the customer coming back from Stripe (success or cancel) */
+async function handleStripeReturn(){
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+  const canceled = params.get('canceled');
+
+  if (sessionId){
+    try {
+      const res = await fetch(`/api/session/${sessionId}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not verify payment.');
+
+      if (data.paymentStatus === 'paid'){
+        const pkg = PACKAGES[data.metadata.packageId] || { name: data.metadata.packageId };
+        document.getElementById('successSummary').innerHTML = `
+          <div class="flex justify-between"><span class="text-ink-700/60">Booking reference</span><span class="font-bold">${sessionId.slice(-10).toUpperCase()}</span></div>
+          <div class="flex justify-between"><span class="text-ink-700/60">Package</span><span class="font-semibold">${pkg.name}</span></div>
+          <div class="flex justify-between"><span class="text-ink-700/60">Student</span><span class="font-semibold">${data.metadata.fullName || '—'}</span></div>
+          <div class="flex justify-between"><span class="text-ink-700/60">Destination</span><span class="font-semibold">${data.metadata.destination || '—'}</span></div>
+          <div class="flex justify-between"><span class="text-ink-700/60">Intake</span><span class="font-semibold">${data.metadata.intake || '—'}</span></div>
+          <div class="flex justify-between pt-2 border-t border-gray-200"><span class="font-bold">Total paid</span><span class="font-semibold text-brand-700">$${(data.amountTotal/100).toFixed(2)}</span></div>
+        `;
+        document.getElementById('bookingModal').classList.remove('hidden');
+        document.getElementById('stepperWrap').classList.add('hidden');
+        document.body.style.overflow = 'hidden';
+        document.querySelectorAll('.step-panel').forEach(p => p.classList.add('hidden'));
+        document.getElementById('step4').classList.remove('hidden');
+        document.getElementById('modalFooter').classList.add('hidden');
+      } else {
+        showToast('Payment was not completed. Please try again.');
+      }
+    } catch (err) {
+      showToast(err.message || 'Could not confirm your payment.');
+    }
+    window.history.replaceState({}, '', window.location.pathname);
+  } else if (canceled){
+    showToast('Payment canceled — nothing was charged. You can try again anytime.');
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+}
+
+/* ============ INIT ============ */
+async function init(){
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderDestinations();
+  renderFAQ();
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const res = await fetch('/pricing.json');
+  const data = await res.json();
+  PACKAGES = data.packages;
+  ADDONS = data.addons;
+  renderPricing();
+
+  handleStripeReturn();
+}
+init();
+</script>
+</body>
+</html>

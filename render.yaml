@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: unipath
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: STRIPE_SECRET_KEY
+        sync: false

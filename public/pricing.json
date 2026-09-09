@@ -1,0 +1,66 @@
+{
+  "packages": {
+    "standard": {
+      "id": "standard",
+      "name": "Standard Application Review",
+      "price": 299,
+      "tagline": "Perfect if you already have a draft and want expert eyes before you submit.",
+      "badge": null,
+      "features": [
+        "1 detailed SOP / essay review & edit",
+        "University shortlist sanity-check (up to 3 schools)",
+        "Application document checklist",
+        "Email support (5-business-day turnaround)",
+        "1 follow-up revision round"
+      ]
+    },
+    "vip": {
+      "id": "vip",
+      "name": "VIP 1-on-1 Visa Coaching",
+      "price": 549,
+      "tagline": "Dedicated visa specialist guidance from documentation to interview day.",
+      "badge": "Most Popular",
+      "features": [
+        "3× 1-on-1 video coaching sessions",
+        "Mock visa interview with detailed feedback",
+        "Financial documentation review",
+        "Personalized answer scripting",
+        "Priority email & chat support",
+        "Visa refusal contingency plan"
+      ]
+    },
+    "complete": {
+      "id": "complete",
+      "name": "Complete End-to-End Pack",
+      "price": 999,
+      "tagline": "Everything from shortlisting to visa approval and pre-departure briefing.",
+      "badge": "Best Value",
+      "features": [
+        "Everything in VIP Visa Coaching",
+        "Full university shortlisting (up to 8 schools)",
+        "Unlimited SOP / essay revisions",
+        "Application submission support for all schools",
+        "Scholarship & funding guidance",
+        "Pre-departure orientation session",
+        "12 months of email support"
+      ]
+    },
+    "discovery": {
+      "id": "discovery",
+      "name": "Free Discovery Call",
+      "price": 0,
+      "tagline": "A free 15-minute call to review your profile and answer your questions.",
+      "badge": "Free",
+      "features": [
+        "Profile & project analysis",
+        "Program shortlist suggestions",
+        "Answers to all your questions",
+        "No obligation, no pressure"
+      ]
+    }
+  },
+  "addons": [
+    { "id": "housing", "label": "Housing & Airport Pickup Assistance", "price": 99 },
+    { "id": "test", "label": "Standardized Test Prep (IELTS / TOEFL / GRE)", "price": 149 }
+  ]
+}
