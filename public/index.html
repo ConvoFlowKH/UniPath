@@ -70,6 +70,9 @@
 
   .accordion-content { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
 
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
   .spinner { border-top-color: #f97316; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
@@ -300,31 +303,26 @@
 </section>
 
 <!-- ============ TESTIMONIALS ============ -->
-<section class="py-24 px-5 sm:px-8 bg-gray-50">
+<section class="py-24 px-5 sm:px-8 bg-gray-50 overflow-hidden">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl reveal">
       <p class="text-sm font-bold uppercase tracking-widest text-brand-600">Success stories</p>
       <h2 class="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight">Students who found their path</h2>
     </div>
-    <div class="mt-12 grid md:grid-cols-3 gap-6">
-      <div class="reveal bg-white rounded-2xl p-7 border border-gray-100 shadow-card">
-        <div class="flex gap-1 text-brand-500">★★★★★</div>
-        <p class="mt-4 text-ink-700/80 leading-relaxed">"My mentor rewrote my SOP three times until it actually sounded like me. Got into my #1 choice in Toronto."</p>
-        <p class="mt-5 font-bold">Amara O.</p>
-        <p class="text-sm text-ink-700/60">University of Toronto, Canada</p>
+
+    <div class="reveal mt-12 relative">
+      <div id="testimonialTrack" class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth -mx-5 px-5 sm:mx-0 sm:px-0">
+        <!-- filled by JS -->
       </div>
-      <div class="reveal bg-white rounded-2xl p-7 border border-gray-100 shadow-card" style="animation-delay:.05s">
-        <div class="flex gap-1 text-brand-500">★★★★★</div>
-        <p class="mt-4 text-ink-700/80 leading-relaxed">"The mock visa interviews were uncannily close to the real thing. I walked in prepared and got approved same day."</p>
-        <p class="mt-5 font-bold">Daniel K.</p>
-        <p class="text-sm text-ink-700/60">University of Manchester, UK</p>
-      </div>
-      <div class="reveal bg-white rounded-2xl p-7 border border-gray-100 shadow-card" style="animation-delay:.1s">
-        <div class="flex gap-1 text-brand-500">★★★★★</div>
-        <p class="mt-4 text-ink-700/80 leading-relaxed">"Four times cheaper than the agency my friend used, and honestly more responsive. Worth every dollar."</p>
-        <p class="mt-5 font-bold">Priya S.</p>
-        <p class="text-sm text-ink-700/60">Arizona State University, USA</p>
-      </div>
+
+      <button id="testimonialPrev" aria-label="Previous testimonial" class="flex absolute top-1/2 -translate-y-1/2 -left-2 sm:-left-5 h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-white border border-gray-200 shadow-card hover:border-brand-300 transition z-10">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button id="testimonialNext" aria-label="Next testimonial" class="flex absolute top-1/2 -translate-y-1/2 -right-2 sm:-right-5 h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full bg-white border border-gray-200 shadow-card hover:border-brand-300 transition z-10">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div id="testimonialDots" class="mt-8 flex items-center justify-center gap-2"></div>
     </div>
   </div>
 </section>
@@ -361,7 +359,7 @@
       <div class="grid grid-cols-2 gap-4">
         <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
           <p class="text-sm text-white/60">Email us</p>
-          <p class="mt-1 font-semibold">hello@unipath.education</p>
+          <p class="mt-1 font-semibold break-all">unipatheducationkh@gmail.com</p>
         </div>
         <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
           <p class="text-sm text-white/60">Call us</p>
@@ -394,6 +392,20 @@
         <span class="text-xl font-semibold tracking-tight">UniPath</span>
       </a>
       <p class="mt-4 text-sm text-ink-700/70 max-w-xs leading-relaxed">Study abroad consultancy helping students navigate applications, visas, and admissions into top global universities.</p>
+      <div class="mt-5 flex items-center gap-3">
+        <a href="https://www.instagram.com/unipatheducationkh" target="_blank" rel="noopener noreferrer" aria-label="UniPath on Instagram" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-ink-700 hover:border-brand-300 hover:text-brand-600 transition">
+          <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61593882647363" target="_blank" rel="noopener noreferrer" aria-label="UniPath on Facebook" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-ink-700 hover:border-brand-300 hover:text-brand-600 transition">
+          <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none"><path d="M14 8.5h2.5V5.5H14c-2.2 0-4 1.8-4 4V12H8v3h2v6h3v-6h2.5l.5-3H13v-2c0-.8.7-1.5 1.5-1.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@unipath_education" target="_blank" rel="noopener noreferrer" aria-label="UniPath on TikTok" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-ink-700 hover:border-brand-300 hover:text-brand-600 transition">
+          <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.3 2.1 1.7 3.7 3.8 4v3c-1.4 0-2.7-.4-3.8-1.1v6.4c0 3.4-2.8 6.2-6.2 6.2S4.1 18.6 4.1 15.2 6.9 9 10.3 9c.4 0 .8 0 1.2.1v3.2c-.4-.1-.8-.2-1.2-.2-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3V3h3.2Z"/></svg>
+        </a>
+        <a href="mailto:unipatheducationkh@gmail.com" aria-label="Email UniPath" class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-ink-700 hover:border-brand-300 hover:text-brand-600 transition">
+          <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div>
       <p class="font-bold text-sm">Company</p>
@@ -415,9 +427,9 @@
     <div>
       <p class="font-bold text-sm">Legal</p>
       <ul class="mt-4 space-y-2.5 text-sm text-ink-700/70">
-        <li><a href="#" class="hover:text-brand-600">Terms of Service</a></li>
-        <li><a href="#" class="hover:text-brand-600">Privacy Policy</a></li>
-        <li><a href="#" class="hover:text-brand-600">Refund Policy</a></li>
+        <li><a href="/terms.html" class="hover:text-brand-600">Terms of Service</a></li>
+        <li><a href="/privacy.html" class="hover:text-brand-600">Privacy Policy</a></li>
+        <li><a href="/refund.html" class="hover:text-brand-600">Refund Policy</a></li>
       </ul>
     </div>
   </div>
@@ -544,7 +556,7 @@
           <form id="paymentForm" class="mt-5" novalidate>
             <label class="flex items-start gap-2.5 text-sm text-ink-700/75">
               <input required name="terms" type="checkbox" class="mt-1 h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-400" />
-              I agree to the Terms of Service and Refund Policy.
+              I agree to the <a href="/terms.html" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="text-brand-600 font-semibold hover:underline">Terms of Service</a> and <a href="/refund.html" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" class="text-brand-600 font-semibold hover:underline">Refund Policy</a>.
             </label>
             <p class="err-msg" data-for="terms"></p>
           </form>
@@ -667,6 +679,73 @@ function renderPricing(){
     `;
   }).join('');
   document.querySelectorAll('#pricingGrid .reveal').forEach(el => io.observe(el));
+}
+
+/* ============ TESTIMONIALS CAROUSEL ============ */
+const TESTIMONIALS = [
+  { quote: "My mentor rewrote my SOP three times until it actually sounded like me. Got into my #1 choice in Toronto.", name: "Amara O.", school: "University of Toronto, Canada" },
+  { quote: "The mock visa interviews were uncannily close to the real thing. I walked in prepared and got approved same day.", name: "Daniel K.", school: "University of Manchester, UK" },
+  { quote: "Four times cheaper than the agency my friend used, and honestly more responsive. Worth every dollar.", name: "Priya S.", school: "Arizona State University, USA" },
+];
+
+let testimonialIndex = 0;
+let testimonialAutoplayTimer;
+
+function renderTestimonials(){
+  const track = document.getElementById('testimonialTrack');
+  track.innerHTML = TESTIMONIALS.map(t => `
+    <div class="snap-center shrink-0 w-full flex justify-center px-2">
+      <div class="bg-white rounded-2xl p-7 sm:p-9 border border-gray-100 shadow-card max-w-xl w-full">
+        <div class="flex gap-1 text-brand-500">★★★★★</div>
+        <p class="mt-4 text-lg text-ink-700/80 leading-relaxed">"${t.quote}"</p>
+        <p class="mt-5 font-semibold">${t.name}</p>
+        <p class="text-sm text-ink-700/60">${t.school}</p>
+      </div>
+    </div>
+  `).join('');
+
+  const dots = document.getElementById('testimonialDots');
+  dots.innerHTML = TESTIMONIALS.map((_, i) => `
+    <button onclick="goToTestimonial(${i})" aria-label="Go to testimonial ${i + 1}" class="testimonial-dot h-2.5 w-2.5 rounded-full transition ${i === 0 ? 'bg-brand-500' : 'bg-gray-300 hover:bg-gray-400'}"></button>
+  `).join('');
+
+  document.getElementById('testimonialPrev').addEventListener('click', () => goToTestimonial(testimonialIndex - 1));
+  document.getElementById('testimonialNext').addEventListener('click', () => goToTestimonial(testimonialIndex + 1));
+
+  track.addEventListener('scroll', () => {
+    const i = Math.round(track.scrollLeft / track.clientWidth);
+    if (i !== testimonialIndex && i >= 0 && i < TESTIMONIALS.length) setActiveTestimonial(i);
+  });
+  track.addEventListener('mouseenter', stopTestimonialAutoplay);
+  track.addEventListener('mouseleave', startTestimonialAutoplay);
+  track.addEventListener('touchstart', stopTestimonialAutoplay, { passive: true });
+
+  startTestimonialAutoplay();
+}
+
+function goToTestimonial(i){
+  const count = TESTIMONIALS.length;
+  const next = (i + count) % count;
+  const track = document.getElementById('testimonialTrack');
+  track.scrollTo({ left: next * track.clientWidth, behavior: 'smooth' });
+  setActiveTestimonial(next);
+}
+
+function setActiveTestimonial(i){
+  testimonialIndex = i;
+  document.querySelectorAll('.testimonial-dot').forEach((dot, idx) => {
+    dot.classList.toggle('bg-brand-500', idx === i);
+    dot.classList.toggle('bg-gray-300', idx !== i);
+  });
+}
+
+function startTestimonialAutoplay(){
+  stopTestimonialAutoplay();
+  testimonialAutoplayTimer = setInterval(() => goToTestimonial(testimonialIndex + 1), 6000);
+}
+
+function stopTestimonialAutoplay(){
+  clearInterval(testimonialAutoplayTimer);
 }
 
 /* ============ RENDER: FAQ ============ */
@@ -1020,6 +1099,7 @@ async function handleStripeReturn(){
 async function init(){
   document.getElementById('year').textContent = new Date().getFullYear();
   renderDestinations();
+  renderTestimonials();
   renderFAQ();
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 

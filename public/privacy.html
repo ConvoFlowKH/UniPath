@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — UniPath</title>
+<meta name="description" content="Privacy policy for UniPath covering data collection, Stripe payment processing, and your rights." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Urbanist:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --bg-subtle:#f7f5f2;
+    --text:#111111;
+    --text-muted:#616161;
+    --border:#e6e1da;
+    --accent:#fe6a2e;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.7;
+  }
+  h1,h2{
+    font-family:'Urbanist', ui-sans-serif, system-ui, sans-serif;
+    color:var(--text);
+    letter-spacing:-0.01em;
+  }
+  a{ color:var(--accent); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  a:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .wrap{ max-width:720px; margin:0 auto; padding:0 24px 96px; }
+
+  .back{
+    display:inline-flex; align-items:center; gap:6px; margin-top:32px;
+    font-size:14px; font-weight:600; color:var(--text-muted);
+  }
+  .back:hover{ color:var(--accent); }
+
+  .masthead{
+    border-bottom:1px solid var(--border);
+    padding:20px 0 32px;
+    margin-bottom:40px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; margin-top:20px; }
+  .brand-mark{
+    height:34px; width:34px; border-radius:10px;
+    background:var(--text); color:var(--bg);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .brand-name{ font-family:'Urbanist',sans-serif; font-weight:700; font-size:19px; }
+  .eyebrow{
+    margin:20px 0 6px; font-size:12px; font-weight:600; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--accent);
+  }
+  h1{ margin:0; font-size:clamp(28px,4vw,36px); font-weight:800; }
+  .updated{ margin:10px 0 0; color:var(--text-muted); font-size:14px; }
+
+  .intro{ color:var(--text-muted); font-size:16.5px; margin-bottom:40px; max-width:64ch; }
+
+  nav.toc{
+    background:var(--bg-subtle); border:1px solid var(--border); border-radius:14px;
+    padding:20px 24px; margin-bottom:48px;
+  }
+  nav.toc p{ margin:0 0 10px; font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); }
+  nav.toc ol{ margin:0; padding:0; list-style:none; display:grid; grid-template-columns:repeat(2,1fr); gap:6px 20px; }
+  nav.toc a{ color:var(--text); font-size:14.5px; }
+  nav.toc a:hover{ color:var(--accent); }
+  nav.toc .n{ color:var(--accent); font-variant-numeric:tabular-nums; margin-right:6px; }
+
+  section{ padding:28px 0; border-bottom:1px solid var(--border); scroll-margin-top:24px; }
+  section:last-of-type{ border-bottom:none; }
+  section h2{ font-size:21px; font-weight:700; margin:0 0 14px; display:flex; align-items:baseline; gap:10px; }
+  section h2 .n{ color:var(--accent); font-variant-numeric:tabular-nums; font-size:16px; font-weight:700; }
+  section p{ margin:0 0 14px; max-width:66ch; }
+  section p:last-child{ margin-bottom:0; }
+  section ul{ margin:0 0 14px; padding-left:20px; max-width:64ch; }
+  section li{ margin-bottom:6px; }
+  strong{ font-weight:600; }
+
+  .contact-card{
+    background:var(--bg-subtle); border:1px solid var(--border); border-radius:14px;
+    padding:24px 26px; margin-top:8px;
+  }
+  .contact-card a{ font-weight:600; }
+
+  footer{
+    margin-top:48px; padding-top:24px; border-top:1px solid var(--border);
+    display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between;
+    color:var(--text-muted); font-size:13.5px;
+  }
+
+  @media (max-width:520px){
+    nav.toc ol{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to UniPath
+  </a>
+
+  <header class="masthead">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2 2 7l10 5 10-5-10-5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M6 10.5V16c0 1.5 2.7 3.5 6 3.5s6-2 6-3.5v-5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M21 8v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-name">UniPath</span>
+    </div>
+    <p class="eyebrow">Legal</p>
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: September 9, 2026</p>
+  </header>
+
+  <p class="intro">
+    UniPath ("we," "us," or "our") helps students apply to universities in the United States, United Kingdom, Canada, and Australia. This policy explains what information we collect through unipathedu.org and our booking process, how we use it, and the choices you have.
+  </p>
+
+  <nav class="toc" aria-label="Table of contents">
+    <p>On this page</p>
+    <ol>
+      <li><a href="#information-we-collect"><span class="n">01</span>Information we collect</a></li>
+      <li><a href="#how-we-use-it"><span class="n">02</span>How we use your information</a></li>
+      <li><a href="#payment-processing"><span class="n">03</span>Payment processing</a></li>
+      <li><a href="#cookies"><span class="n">04</span>Cookies &amp; tracking</a></li>
+      <li><a href="#sharing"><span class="n">05</span>Data sharing &amp; disclosure</a></li>
+      <li><a href="#retention"><span class="n">06</span>Data retention</a></li>
+      <li><a href="#your-rights"><span class="n">07</span>Your rights</a></li>
+      <li><a href="#children"><span class="n">08</span>Children's privacy</a></li>
+      <li><a href="#changes"><span class="n">09</span>Changes to this policy</a></li>
+      <li><a href="#contact"><span class="n">10</span>Contact us</a></li>
+    </ol>
+  </nav>
+
+  <section id="information-we-collect">
+    <h2><span class="n">01</span>Information we collect</h2>
+    <p>When you book a consultation or purchase a package through our checkout flow, we collect the information you provide directly, including:</p>
+    <ul>
+      <li>Full name, email address, and phone number</li>
+      <li>Your destination country and target intake term</li>
+      <li>Any notes or goals you share with your mentor</li>
+      <li>The package or service you selected</li>
+    </ul>
+    <p>We do not collect payment card details ourselves — see <a href="#payment-processing">Payment processing</a> below.</p>
+  </section>
+
+  <section id="how-we-use-it">
+    <h2><span class="n">02</span>How we use your information</h2>
+    <p>We use the information you provide to:</p>
+    <ul>
+      <li>Deliver the consultation, review, or coaching service you booked</li>
+      <li>Match you with a mentor suited to your destination and goals</li>
+      <li>Send booking confirmations and respond to your questions</li>
+      <li>Improve our services and communications</li>
+    </ul>
+    <p>We do not use your information for automated decision-making, and we do not sell it to third parties.</p>
+  </section>
+
+  <section id="payment-processing">
+    <h2><span class="n">03</span>Payment processing</h2>
+    <p>All payments are processed by <strong>Stripe, Inc.</strong>, a PCI-compliant third-party payment processor. When you check out, you're redirected to Stripe's own secure payment page — your card number, expiry, and CVC are entered directly with Stripe and never pass through or touch our servers. We receive only confirmation that a payment succeeded, the amount charged, and the billing email you provided to Stripe.</p>
+  </section>
+
+  <section id="cookies">
+    <h2><span class="n">04</span>Cookies &amp; tracking</h2>
+    <p>Our website does not currently use advertising or analytics cookies. Stripe's checkout page sets its own cookies as part of fraud prevention and payment processing, governed by <a href="https://stripe.com/privacy" target="_blank" rel="noopener noreferrer">Stripe's Privacy Policy</a>.</p>
+  </section>
+
+  <section id="sharing">
+    <h2><span class="n">05</span>Data sharing &amp; disclosure</h2>
+    <p>We share your information only as needed to run our business:</p>
+    <ul>
+      <li><strong>With Stripe</strong>, to process your payment</li>
+      <li><strong>With your assigned mentor</strong>, so they can prepare for your session</li>
+      <li><strong>When required by law</strong>, such as in response to a valid legal request</li>
+    </ul>
+    <p>We never sell or rent your personal information to advertisers or data brokers.</p>
+  </section>
+
+  <section id="retention">
+    <h2><span class="n">06</span>Data retention</h2>
+    <p>We keep your information for as long as needed to provide our services and to meet legal, accounting, or reporting obligations — typically for the duration of your engagement with a mentor plus a reasonable follow-up period. You can request earlier deletion at any time (see <a href="#your-rights">Your rights</a>).</p>
+  </section>
+
+  <section id="your-rights">
+    <h2><span class="n">07</span>Your rights</h2>
+    <p>Depending on where you live, you may have the right to access, correct, export, or delete the personal information we hold about you, or to object to certain uses of it. To exercise any of these rights, email us at <a href="mailto:unipatheducationkh@gmail.com">unipatheducationkh@gmail.com</a> — we'll respond within a reasonable time.</p>
+  </section>
+
+  <section id="children">
+    <h2><span class="n">08</span>Children's privacy</h2>
+    <p>Our services are intended for prospective university students and are not directed at children under 13. We do not knowingly collect personal information from children under 13.</p>
+  </section>
+
+  <section id="changes">
+    <h2><span class="n">09</span>Changes to this policy</h2>
+    <p>We may update this policy from time to time. Material changes will be reflected by an updated "Last updated" date at the top of this page.</p>
+  </section>
+
+  <section id="contact">
+    <h2><span class="n">10</span>Contact us</h2>
+    <p>Questions about this policy or how we handle your data:</p>
+    <div class="contact-card">
+      <p style="margin:0 0 4px;">UniPath Education</p>
+      <p style="margin:0;"><a href="mailto:unipatheducationkh@gmail.com">unipatheducationkh@gmail.com</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 UniPath Education</span>
+    <a href="https://unipathedu.org">unipathedu.org</a>
+  </footer>
+</div>
+</body>
+</html>
