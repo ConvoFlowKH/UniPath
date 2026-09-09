@@ -73,7 +73,13 @@ app.post('/api/create-checkout-session', async (req, res) => {
 
     res.json({ url: session.url });
   } catch (err) {
-    console.error('create-checkout-session error:', err.message);
+    console.error('create-checkout-session error:', {
+      message: err.message,
+      type: err.type,
+      code: err.code,
+      causeCode: err.cause?.code,
+      causeMessage: err.cause?.message,
+    });
     res.status(400).json({ error: err.message });
   }
 });
