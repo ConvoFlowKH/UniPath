@@ -73,6 +73,10 @@
   .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
 
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  #logoMarquee { animation: marquee 46s linear infinite; }
+  #logoMarquee:hover { animation-play-state: paused; }
+
   .spinner { border-top-color: #f97316; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
@@ -189,6 +193,16 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ UNIVERSITY LOGO BAR ============ -->
+<section class="py-12 border-y border-gray-100 bg-white overflow-hidden">
+  <p class="reveal text-center text-sm font-semibold text-ink-700/60">Schools our mentors know from the inside</p>
+  <div class="mt-7 relative">
+    <div class="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+    <div id="logoMarquee" class="flex w-max gap-3"></div>
   </div>
 </section>
 
@@ -621,6 +635,25 @@ let state = {
   step: 1,
   destinationPick: '',
 };
+
+/* ============ RENDER: UNIVERSITY LOGO BAR ============ */
+const UNIVERSITIES = [
+  'Harvard', 'Stanford', 'MIT', 'Yale', 'Princeton', 'Columbia',
+  'Oxford', 'Cambridge', 'Imperial', 'LSE', 'UCL',
+  'Melbourne', 'Sydney', 'UNSW', 'ANU', 'Monash',
+  'Toronto', 'McGill', 'UBC', "Queen's",
+];
+
+function renderLogoMarquee(){
+  const track = document.getElementById('logoMarquee');
+  const badge = (name) => `
+    <span class="shrink-0 inline-flex items-center rounded-full border border-gray-200 bg-gray-50 px-5 py-2.5 text-sm font-semibold text-ink-700/60 hover:border-brand-300 hover:text-brand-600 transition">
+      ${name}
+    </span>
+  `;
+  // duplicated once so the -50% translateX loop is seamless
+  track.innerHTML = UNIVERSITIES.map(badge).join('') + UNIVERSITIES.map(badge).join('');
+}
 
 /* ============ RENDER: DESTINATIONS ============ */
 const DESTINATIONS = [
@@ -1098,6 +1131,7 @@ async function handleStripeReturn(){
 /* ============ INIT ============ */
 async function init(){
   document.getElementById('year').textContent = new Date().getFullYear();
+  renderLogoMarquee();
   renderDestinations();
   renderTestimonials();
   renderFAQ();
