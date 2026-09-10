@@ -74,7 +74,7 @@
   .no-scrollbar::-webkit-scrollbar { display: none; }
 
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  #logoMarquee { animation: marquee 46s linear infinite; }
+  #logoMarquee { animation: marquee 110s linear infinite; }
   #logoMarquee:hover { animation-play-state: paused; }
 
   .spinner { border-top-color: #f97316; animation: spin 0.8s linear infinite; }
@@ -202,7 +202,7 @@
   <div class="mt-7 relative">
     <div class="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
     <div class="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
-    <div id="logoMarquee" class="flex w-max gap-3"></div>
+    <div id="logoMarquee" class="flex w-max gap-4"></div>
   </div>
 </section>
 
@@ -698,7 +698,7 @@ async function renderLogoMarquee(){
   const schools = await res.json();
 
   const badge = (u) => `
-    <span class="shrink-0 inline-flex items-center justify-center h-16 w-32 sm:h-20 sm:w-40 rounded-xl border border-gray-100 bg-white px-4 py-2 hover:shadow-card transition">
+    <span class="shrink-0 inline-flex items-center justify-center h-24 w-48 sm:h-28 sm:w-56 rounded-xl border border-gray-100 bg-white px-5 py-3 hover:shadow-card transition">
       <img src="${u.file}" alt="${u.name}" class="max-h-full max-w-full object-contain" loading="lazy" />
     </span>
   `;
