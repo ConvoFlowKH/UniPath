@@ -22,6 +22,9 @@ const stripe = Stripe(stripeSecretKey || 'sk_test_placeholder_key_not_set');
 const mailer = nodemailer.createTransport({
   service: 'gmail',
   auth: { user: gmailUser, pass: gmailAppPassword },
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
 });
 const pricing = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'pricing.json'), 'utf8'));
 
@@ -119,6 +122,10 @@ app.get('/api/session/:id', async (req, res) => {
 
 app.post('/api/contact', async (req, res) => {
   try {
+    if (!gmailUser || !gmailAppPassword) {
+      return res.status(503).json({ error: 'The contact form is not set up yet. Please email us directly for now.' });
+    }
+
     const { name, email, message } = req.body || {};
 
     if (!name || !email || !message) {
