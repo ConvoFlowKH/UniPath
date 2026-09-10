@@ -629,7 +629,7 @@
             </svg>
           </div>
           <h3 class="mt-5 text-2xl font-semibold">Booking confirmed!</h3>
-          <p class="mt-2 text-ink-700/70 max-w-sm mx-auto">Your payment was received by Stripe. A confirmation email is on its way, and your mentor will reach out within 24 hours.</p>
+          <p class="mt-2 text-ink-700/70 max-w-sm mx-auto" id="successMessage">Your payment was received by Stripe. A confirmation email is on its way, and your mentor will reach out within 24 hours.</p>
 
           <div class="mt-6 text-left rounded-2xl border border-gray-100 bg-gray-50 p-5 max-w-md mx-auto space-y-2.5 text-sm" id="successSummary"></div>
 
@@ -1147,6 +1147,7 @@ function confirmFreeBooking(){
   const fullName = `${student.firstName || ''} ${student.lastName || ''}`.trim();
   const reference = 'UP-' + Math.random().toString(36).slice(2, 10).toUpperCase();
 
+  document.getElementById('successMessage').textContent = "You're all set — no payment was needed. A confirmation email is on its way, and your mentor will reach out within 24 hours.";
   document.getElementById('successSummary').innerHTML = `
     <div class="flex justify-between"><span class="text-ink-700/60">Booking reference</span><span class="font-bold">${reference}</span></div>
     <div class="flex justify-between"><span class="text-ink-700/60">Package</span><span class="font-semibold">${pkg.name}</span></div>
