@@ -230,7 +230,7 @@
       <p class="mt-4 text-ink-700/75 text-lg">Pick a destination to see it reflected in your consultation booking. Our mentors specialize by country.</p>
     </div>
 
-    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-5 gap-6" id="destinationGrid">
+    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="destinationGrid">
       <!-- filled by JS -->
     </div>
   </div>
@@ -532,6 +532,7 @@
                 <option value="Canada">Canada</option>
                 <option value="Australia">Australia</option>
                 <option value="Singapore">Singapore</option>
+                <option value="SouthKorea">South Korea</option>
                 <option value="Other">Other / Not sure yet</option>
               </select>
               <p class="err-msg"></p>
@@ -714,6 +715,7 @@ const DESTINATIONS = [
   { code:'Canada', name:'Canada', emoji:'🇨🇦', unis:'10+ partner universities', blurb:'Strong post-study work visas and some of the friendliest immigration pathways.' },
   { code:'Australia', name:'Australia', emoji:'🇦🇺', unis:'13+ partner universities', blurb:'World-class research universities with generous scholarship programs.' },
   { code:'Singapore', name:'Singapore', emoji:'🇸🇬', unis:'6+ partner universities', blurb:'Top-ranked universities a short flight from home, at a fraction of Western tuition costs.' },
+  { code:'SouthKorea', name:'South Korea', emoji:'🇰🇷', unis:'8+ partner universities', blurb:'Generous government scholarships and a growing English-taught program scene.' },
 ];
 
 function renderDestinations(){
