@@ -14,6 +14,7 @@ const contactInboxEmail = (process.env.CONTACT_INBOX_EMAIL || 'unipatheducationk
 const tiktokClientKey = (process.env.TIKTOK_CLIENT_KEY || '').trim();
 const tiktokClientSecret = (process.env.TIKTOK_CLIENT_SECRET || '').trim();
 const tiktokRedirectUri = (process.env.TIKTOK_REDIRECT_URI || 'https://unipathedu.org/api/tiktok/callback').trim();
+const adminSecret = (process.env.ADMIN_SECRET || '').trim();
 
 if (!stripeSecretKey) {
   console.warn('Missing STRIPE_SECRET_KEY — the site will run, but checkout will fail until it is set.');
@@ -23,6 +24,9 @@ if (!resendApiKey) {
 }
 if (!tiktokClientKey || !tiktokClientSecret) {
   console.warn('Missing TIKTOK_CLIENT_KEY/TIKTOK_CLIENT_SECRET — TikTok login/posting will fail until they are set.');
+}
+if (!adminSecret) {
+  console.warn('Missing ADMIN_SECRET — the admin page and TikTok posting will refuse all requests until it is set.');
 }
 
 const stripe = Stripe(stripeSecretKey || 'sk_test_placeholder_key_not_set');
@@ -254,7 +258,18 @@ async function getValidTiktokAccessToken() {
   return tiktokTokens.accessToken;
 }
 
-app.post('/api/tiktok/post', upload.single('video'), async (req, res) => {
+function requireAdmin(req, res, next) {
+  if (!adminSecret || req.get('x-admin-key') !== adminSecret) {
+    return res.status(401).json({ error: 'Invalid or missing admin key.' });
+  }
+  next();
+}
+
+app.get('/api/tiktok/connection-status', requireAdmin, (req, res) => {
+  res.json({ connected: !!tiktokTokens });
+});
+
+app.post('/api/tiktok/post', requireAdmin, upload.single('video'), async (req, res) => {
   try {
     if (!req.file) throw new Error('No video file uploaded.');
 
