@@ -376,8 +376,8 @@
           <p class="mt-1 font-semibold whitespace-nowrap">unipatheducationkh@gmail.com</p>
         </div>
         <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-          <p class="text-sm text-white/60">Telegram</p>
-          <p class="mt-1 font-semibold"><a href="https://t.me/Ancelin.kail" target="_blank" rel="noopener noreferrer" class="hover:text-brand-400 transition">✈️ Message us</a></p>
+          <p class="text-sm text-white/60">Send a message</p>
+          <p class="mt-1 font-semibold"><button onclick="openContactModal()" class="hover:text-brand-400 transition">✉️ Contact form</button></p>
         </div>
         <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
           <p class="text-sm text-white/60">Support</p>
@@ -601,6 +601,61 @@
           Continue
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTACT MODAL ============ -->
+<div id="contactModal" class="fixed inset-0 z-50 hidden">
+  <div class="absolute inset-0 modal-backdrop" onclick="closeContactModal()"></div>
+
+  <div class="relative h-full flex items-center justify-center p-4 overflow-y-auto">
+    <div class="animate-popIn bg-white w-full max-w-md rounded-3xl shadow-2xl">
+      <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-brand-600">Get in touch</p>
+          <h3 class="text-lg font-semibold">Send us a message</h3>
+        </div>
+        <button onclick="closeContactModal()" class="h-9 w-9 rounded-full hover:bg-gray-100 flex items-center justify-center" aria-label="Close">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <div class="px-6 sm:px-8 py-6">
+        <div id="contactFormWrap">
+          <form id="contactForm" class="space-y-4" novalidate>
+            <div>
+              <label class="text-sm font-semibold">Your name</label>
+              <input required name="name" type="text" placeholder="Jordan Lee" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
+              <p class="err-msg"></p>
+            </div>
+            <div>
+              <label class="text-sm font-semibold">Email address</label>
+              <input required name="email" type="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
+              <p class="err-msg"></p>
+            </div>
+            <div>
+              <label class="text-sm font-semibold">Message</label>
+              <textarea required name="message" rows="4" placeholder="How can we help?" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+              <p class="err-msg"></p>
+            </div>
+          </form>
+          <button id="contactSubmitBtn" onclick="submitContactForm()" class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-500 hover:bg-brand-600 text-white font-semibold px-6 py-3.5 transition">
+            Send Message
+          </button>
+        </div>
+
+        <div id="contactSuccessWrap" class="hidden text-center py-4">
+          <div class="mx-auto h-14 w-14 rounded-full bg-green-100 flex items-center justify-center">
+            <svg class="h-8 w-8 text-green-600" viewBox="0 0 24 24" fill="none"><path d="M4 12.5 9.5 18 20 6.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="mt-4 text-xl font-semibold">Message sent!</h3>
+          <p class="mt-2 text-ink-700/70">Thanks for reaching out. We'll get back to you soon.</p>
+          <button onclick="closeContactModal()" class="mt-6 inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-900 hover:bg-black text-white font-semibold px-6 py-3 transition">
+            Done
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -876,6 +931,49 @@ function openBookingModal(packageId){
 function closeBookingModal(){
   document.getElementById('bookingModal').classList.add('hidden');
   document.body.style.overflow = '';
+}
+
+/* ============ CONTACT MODAL ============ */
+function openContactModal(){
+  document.getElementById('contactModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('contactFormWrap').classList.remove('hidden');
+  document.getElementById('contactSuccessWrap').classList.add('hidden');
+  document.getElementById('contactForm').reset();
+}
+
+function closeContactModal(){
+  document.getElementById('contactModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+async function submitContactForm(){
+  if (!validateForm('contactForm')) return;
+
+  const btn = document.getElementById('contactSubmitBtn');
+  const original = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="h-4 w-4 rounded-full border-2 border-white/40 spinner"></span> Sending...`;
+
+  const data = Object.fromEntries(new FormData(document.getElementById('contactForm')));
+
+  try {
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Could not send your message.');
+
+    document.getElementById('contactFormWrap').classList.add('hidden');
+    document.getElementById('contactSuccessWrap').classList.remove('hidden');
+  } catch (err) {
+    showToast(err.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = original;
+  }
 }
 
 function renderStep1(){

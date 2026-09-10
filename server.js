@@ -3,16 +3,26 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const Stripe = require('stripe');
+const nodemailer = require('nodemailer');
 
 // .trim() guards against a stray trailing newline/whitespace from copy-pasting the
 // key into a dashboard env var field — that's invisible but breaks the HTTP client.
 const stripeSecretKey = (process.env.STRIPE_SECRET_KEY || '').trim();
+const gmailUser = (process.env.GMAIL_USER || '').trim();
+const gmailAppPassword = (process.env.GMAIL_APP_PASSWORD || '').trim();
 
 if (!stripeSecretKey) {
   console.warn('Missing STRIPE_SECRET_KEY — the site will run, but checkout will fail until it is set.');
 }
+if (!gmailUser || !gmailAppPassword) {
+  console.warn('Missing GMAIL_USER/GMAIL_APP_PASSWORD — the site will run, but the contact form will fail until they are set.');
+}
 
 const stripe = Stripe(stripeSecretKey || 'sk_test_placeholder_key_not_set');
+const mailer = nodemailer.createTransport({
+  service: 'gmail',
+  auth: { user: gmailUser, pass: gmailAppPassword },
+});
 const pricing = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'pricing.json'), 'utf8'));
 
 const app = express();
@@ -104,6 +114,32 @@ app.get('/api/session/:id', async (req, res) => {
   } catch (err) {
     console.error('session lookup error:', err.message);
     res.status(400).json({ error: err.message });
+  }
+});
+
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, message } = req.body || {};
+
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'Name, email, and message are all required.' });
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: 'Enter a valid email address.' });
+    }
+
+    await mailer.sendMail({
+      from: `UniPath Website <${gmailUser}>`,
+      to: gmailUser,
+      replyTo: email,
+      subject: `New message from ${name} via unipathedu.org`,
+      text: `From: ${name} <${email}>\n\n${message}`,
+    });
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('contact form error:', err.message);
+    res.status(400).json({ error: 'Could not send your message. Please try again or email us directly.' });
   }
 });
 
