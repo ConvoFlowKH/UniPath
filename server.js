@@ -3,29 +3,21 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const Stripe = require('stripe');
-const nodemailer = require('nodemailer');
 
 // .trim() guards against a stray trailing newline/whitespace from copy-pasting the
 // key into a dashboard env var field — that's invisible but breaks the HTTP client.
 const stripeSecretKey = (process.env.STRIPE_SECRET_KEY || '').trim();
-const gmailUser = (process.env.GMAIL_USER || '').trim();
-const gmailAppPassword = (process.env.GMAIL_APP_PASSWORD || '').trim();
+const resendApiKey = (process.env.RESEND_API_KEY || '').trim();
+const contactInboxEmail = (process.env.CONTACT_INBOX_EMAIL || 'unipatheducationkh@gmail.com').trim();
 
 if (!stripeSecretKey) {
   console.warn('Missing STRIPE_SECRET_KEY — the site will run, but checkout will fail until it is set.');
 }
-if (!gmailUser || !gmailAppPassword) {
-  console.warn('Missing GMAIL_USER/GMAIL_APP_PASSWORD — the site will run, but the contact form will fail until they are set.');
+if (!resendApiKey) {
+  console.warn('Missing RESEND_API_KEY — the site will run, but the contact form will fail until it is set.');
 }
 
 const stripe = Stripe(stripeSecretKey || 'sk_test_placeholder_key_not_set');
-const mailer = nodemailer.createTransport({
-  service: 'gmail',
-  auth: { user: gmailUser, pass: gmailAppPassword },
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
-});
 const pricing = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'pricing.json'), 'utf8'));
 
 const app = express();
@@ -122,7 +114,7 @@ app.get('/api/session/:id', async (req, res) => {
 
 app.post('/api/contact', async (req, res) => {
   try {
-    if (!gmailUser || !gmailAppPassword) {
+    if (!resendApiKey) {
       return res.status(503).json({ error: 'The contact form is not set up yet. Please email us directly for now.' });
     }
 
@@ -135,13 +127,26 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ error: 'Enter a valid email address.' });
     }
 
-    await mailer.sendMail({
-      from: `UniPath Website <${gmailUser}>`,
-      to: gmailUser,
-      replyTo: email,
-      subject: `New message from ${name} via unipathedu.org`,
-      text: `From: ${name} <${email}>\n\n${message}`,
+    const resendRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'UniPath Website <onboarding@resend.dev>',
+        to: contactInboxEmail,
+        reply_to: email,
+        subject: `New message from ${name} via unipathedu.org`,
+        text: `From: ${name} <${email}>\n\n${message}`,
+      }),
+      signal: AbortSignal.timeout(10000),
     });
+
+    if (!resendRes.ok) {
+      const body = await resendRes.json().catch(() => ({}));
+      throw new Error(body.message || `Resend responded with ${resendRes.status}`);
+    }
 
     res.json({ ok: true });
   } catch (err) {
