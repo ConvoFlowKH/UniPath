@@ -10,3 +10,7 @@ services:
         sync: false
       - key: RESEND_API_KEY
         sync: false
+      - key: TIKTOK_CLIENT_KEY
+        sync: false
+      - key: TIKTOK_CLIENT_SECRET
+        sync: false

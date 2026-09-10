@@ -1,7 +1,9 @@
 require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
+const crypto = require('crypto');
 const express = require('express');
+const multer = require('multer');
 const Stripe = require('stripe');
 
 // .trim() guards against a stray trailing newline/whitespace from copy-pasting the
@@ -9,6 +11,9 @@ const Stripe = require('stripe');
 const stripeSecretKey = (process.env.STRIPE_SECRET_KEY || '').trim();
 const resendApiKey = (process.env.RESEND_API_KEY || '').trim();
 const contactInboxEmail = (process.env.CONTACT_INBOX_EMAIL || 'unipatheducationkh@gmail.com').trim();
+const tiktokClientKey = (process.env.TIKTOK_CLIENT_KEY || '').trim();
+const tiktokClientSecret = (process.env.TIKTOK_CLIENT_SECRET || '').trim();
+const tiktokRedirectUri = (process.env.TIKTOK_REDIRECT_URI || 'https://unipathedu.org/api/tiktok/callback').trim();
 
 if (!stripeSecretKey) {
   console.warn('Missing STRIPE_SECRET_KEY — the site will run, but checkout will fail until it is set.');
@@ -16,13 +21,34 @@ if (!stripeSecretKey) {
 if (!resendApiKey) {
   console.warn('Missing RESEND_API_KEY — the site will run, but the contact form will fail until it is set.');
 }
+if (!tiktokClientKey || !tiktokClientSecret) {
+  console.warn('Missing TIKTOK_CLIENT_KEY/TIKTOK_CLIENT_SECRET — TikTok login/posting will fail until they are set.');
+}
 
 const stripe = Stripe(stripeSecretKey || 'sk_test_placeholder_key_not_set');
 const pricing = JSON.parse(fs.readFileSync(path.join(__dirname, 'public', 'pricing.json'), 'utf8'));
 
+// In-memory only — resets on redeploy/restart. If posting starts failing with an
+// auth error, visit /api/tiktok/login again to reconnect.
+let tiktokTokens = null; // { accessToken, refreshToken, expiresAt }
+let tiktokOAuthState = null;
+
+const uploadsDir = path.join(__dirname, 'uploads');
+fs.mkdirSync(uploadsDir, { recursive: true });
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: uploadsDir,
+    filename: (req, file, cb) => cb(null, `${Date.now()}-${crypto.randomBytes(6).toString('hex')}${path.extname(file.originalname)}`),
+  }),
+  limits: { fileSize: 50 * 1024 * 1024 },
+});
+
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+// Videos need to stay reachable here for a while after posting — TikTok fetches
+// the URL asynchronously (PULL_FROM_URL), not at request time.
+app.use('/uploads', express.static(uploadsDir));
 
 function buildLineItems(packageId, addonIds) {
   const pkg = pricing.packages[packageId];
@@ -152,6 +178,140 @@ app.post('/api/contact', async (req, res) => {
   } catch (err) {
     console.error('contact form error:', err.message);
     res.status(400).json({ error: 'Could not send your message. Please try again or email us directly.' });
+  }
+});
+
+app.get('/api/tiktok/login', (req, res) => {
+  if (!tiktokClientKey) {
+    return res.status(503).send('TikTok is not configured yet.');
+  }
+  tiktokOAuthState = crypto.randomBytes(16).toString('hex');
+  const params = new URLSearchParams({
+    client_key: tiktokClientKey,
+    scope: 'user.info.basic,video.publish',
+    response_type: 'code',
+    redirect_uri: tiktokRedirectUri,
+    state: tiktokOAuthState,
+  });
+  res.redirect(`https://www.tiktok.com/v2/auth/authorize/?${params.toString()}`);
+});
+
+app.get('/api/tiktok/callback', async (req, res) => {
+  try {
+    const { code, state, error, error_description: errorDescription } = req.query;
+    if (error) throw new Error(errorDescription || error);
+    if (!code || state !== tiktokOAuthState) throw new Error('Invalid or expired login attempt — please try /api/tiktok/login again.');
+
+    const tokenRes = await fetch('https://open.tiktokapis.com/v2/oauth/token/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Cache-Control': 'no-cache' },
+      body: new URLSearchParams({
+        client_key: tiktokClientKey,
+        client_secret: tiktokClientSecret,
+        code,
+        grant_type: 'authorization_code',
+        redirect_uri: tiktokRedirectUri,
+      }),
+    });
+    const data = await tokenRes.json();
+    if (data.error) throw new Error(data.error_description || data.error);
+
+    tiktokTokens = {
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+      expiresAt: Date.now() + data.expires_in * 1000,
+    };
+
+    res.send('<h1>TikTok connected</h1><p>You can close this tab.</p>');
+  } catch (err) {
+    console.error('tiktok callback error:', err.message);
+    res.status(400).send(`<h1>TikTok connection failed</h1><p>${err.message}</p>`);
+  }
+});
+
+async function getValidTiktokAccessToken() {
+  if (!tiktokTokens) throw new Error('TikTok is not connected yet — visit /api/tiktok/login first.');
+  if (Date.now() < tiktokTokens.expiresAt - 60000) return tiktokTokens.accessToken;
+
+  const res = await fetch('https://open.tiktokapis.com/v2/oauth/token/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Cache-Control': 'no-cache' },
+    body: new URLSearchParams({
+      client_key: tiktokClientKey,
+      client_secret: tiktokClientSecret,
+      grant_type: 'refresh_token',
+      refresh_token: tiktokTokens.refreshToken,
+    }),
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error_description || data.error);
+
+  tiktokTokens = {
+    accessToken: data.access_token,
+    refreshToken: data.refresh_token,
+    expiresAt: Date.now() + data.expires_in * 1000,
+  };
+  return tiktokTokens.accessToken;
+}
+
+app.post('/api/tiktok/post', upload.single('video'), async (req, res) => {
+  try {
+    if (!req.file) throw new Error('No video file uploaded.');
+
+    const caption = (req.body.caption || '').slice(0, 2200);
+    const accessToken = await getValidTiktokAccessToken();
+    const origin = `${req.protocol}://${req.get('host')}`;
+    const videoUrl = `${origin}/uploads/${req.file.filename}`;
+
+    const initRes = await fetch('https://open.tiktokapis.com/v2/post/publish/video/init/', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        post_info: {
+          title: caption,
+          // Required while the app is unaudited: the post is only visible to the
+          // connected (sandbox) account, not published publicly. TikTok lifts this
+          // once the app passes review.
+          privacy_level: 'SELF_ONLY',
+        },
+        source_info: {
+          source: 'PULL_FROM_URL',
+          video_url: videoUrl,
+        },
+      }),
+    });
+    const initData = await initRes.json();
+    if (initData.error && initData.error.code !== 'ok') {
+      throw new Error(initData.error.message || 'TikTok rejected the post request.');
+    }
+
+    res.json({ ok: true, publishId: initData.data.publish_id, videoUrl });
+  } catch (err) {
+    console.error('tiktok post error:', err.message);
+    res.status(400).json({ error: err.message });
+  }
+});
+
+app.get('/api/tiktok/status/:publishId', async (req, res) => {
+  try {
+    const accessToken = await getValidTiktokAccessToken();
+    const statusRes = await fetch('https://open.tiktokapis.com/v2/post/publish/status/fetch/', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ publish_id: req.params.publishId }),
+    });
+    const data = await statusRes.json();
+    if (data.error && data.error.code !== 'ok') throw new Error(data.error.message);
+    res.json(data.data);
+  } catch (err) {
+    console.error('tiktok status error:', err.message);
+    res.status(400).json({ error: err.message });
   }
 });
 
