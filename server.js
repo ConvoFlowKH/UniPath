@@ -115,11 +115,14 @@ app.post('/api/create-checkout-session', async (req, res) => {
       metadata: {
         packageId,
         addons: (addons || []).join(','),
-        fullName: (s.fullName || '').slice(0, 200),
+        fullName: `${s.firstName || ''} ${s.lastName || ''}`.trim().slice(0, 200),
         phone: (s.phone || '').slice(0, 50),
+        applicationStage: s.applicationStage || '',
+        fieldOfStudy: s.fieldOfStudy || '',
         destination: s.destination || '',
         intake: s.intake || '',
-        notes: (s.notes || '').slice(0, 400),
+        currentEducation: (s.currentEducation || '').slice(0, 400),
+        targetSchools: (s.targetSchools || '').slice(0, 400),
       },
     });
 

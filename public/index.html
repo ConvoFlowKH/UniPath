@@ -507,10 +507,21 @@
 
         <!-- STEP 2: STUDENT DETAILS -->
         <div id="step2" class="step-panel hidden">
+          <p class="sm:col-span-2 text-sm text-ink-700/70 -mt-1 mb-1">The more we know upfront, the faster your mentor can help — this takes about a minute.</p>
           <form id="detailsForm" class="grid sm:grid-cols-2 gap-4" novalidate>
-            <div class="sm:col-span-2">
-              <label class="text-sm font-semibold">Full name</label>
-              <input required name="fullName" type="text" placeholder="Jordan Lee" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
+            <div>
+              <label class="text-sm font-semibold">First name</label>
+              <input required name="firstName" type="text" placeholder="Jordan" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
+              <p class="err-msg"></p>
+            </div>
+            <div>
+              <label class="text-sm font-semibold">Last name</label>
+              <input required name="lastName" type="text" placeholder="Lee" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
+              <p class="err-msg"></p>
+            </div>
+            <div>
+              <label class="text-sm font-semibold">Phone number</label>
+              <input required name="phone" type="tel" placeholder="+1 555 123 4567" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
               <p class="err-msg"></p>
             </div>
             <div>
@@ -518,9 +529,31 @@
               <input required name="email" type="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
               <p class="err-msg"></p>
             </div>
+            <div class="sm:col-span-2">
+              <label class="text-sm font-semibold">Where are you in your applications?</label>
+              <select required name="applicationStage" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
+                <option value="">Select an option</option>
+                <option value="exploring">Just exploring — I need guidance on where to apply</option>
+                <option value="shortlist">I have a shortlist but need help applying</option>
+                <option value="ready">I'm ready to apply and want expert review</option>
+                <option value="submitted">I've already submitted applications</option>
+              </select>
+              <p class="err-msg"></p>
+            </div>
             <div>
-              <label class="text-sm font-semibold">Phone number</label>
-              <input required name="phone" type="tel" placeholder="+1 555 123 4567" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
+              <label class="text-sm font-semibold">Field of study</label>
+              <select required name="fieldOfStudy" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
+                <option value="">Select a field</option>
+                <option value="business">Business / Management</option>
+                <option value="engineering">Engineering</option>
+                <option value="cs">Computer Science / IT</option>
+                <option value="sciences">Sciences</option>
+                <option value="social_sciences">Social Sciences</option>
+                <option value="arts_humanities">Arts / Humanities</option>
+                <option value="law">Law</option>
+                <option value="medicine">Medicine / Health</option>
+                <option value="undecided">Not sure yet</option>
+              </select>
               <p class="err-msg"></p>
             </div>
             <div>
@@ -537,7 +570,7 @@
               </select>
               <p class="err-msg"></p>
             </div>
-            <div>
+            <div class="sm:col-span-2">
               <label class="text-sm font-semibold">Target intake</label>
               <select required name="intake" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
                 <option value="">Select intake</option>
@@ -548,8 +581,13 @@
               <p class="err-msg"></p>
             </div>
             <div class="sm:col-span-2">
-              <label class="text-sm font-semibold">Notes for your mentor <span class="text-ink-700/50 font-normal">(optional)</span></label>
-              <textarea name="notes" rows="3" placeholder="Tell us about your goals, current status, or questions..." class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+              <label class="text-sm font-semibold">What's your current education?</label>
+              <textarea required name="currentEducation" rows="2" placeholder="e.g. I'm in Grade 12 at Liger Learning Center, focusing on Science." class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+              <p class="err-msg"></p>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="text-sm font-semibold">Do you have schools or programs in mind? <span class="text-ink-700/50 font-normal">(optional)</span></label>
+              <textarea name="targetSchools" rows="2" placeholder="e.g. I'm aiming for a Bachelor's in Computer Science, ideally at NUS or UBC, but open to suggestions." class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
             </div>
           </form>
         </div>
@@ -1101,12 +1139,13 @@ function nextStep(){
 function confirmFreeBooking(){
   const pkg = PACKAGES[state.packageId];
   const student = Object.fromEntries(new FormData(document.getElementById('detailsForm')));
+  const fullName = `${student.firstName || ''} ${student.lastName || ''}`.trim();
   const reference = 'UP-' + Math.random().toString(36).slice(2, 10).toUpperCase();
 
   document.getElementById('successSummary').innerHTML = `
     <div class="flex justify-between"><span class="text-ink-700/60">Booking reference</span><span class="font-bold">${reference}</span></div>
     <div class="flex justify-between"><span class="text-ink-700/60">Package</span><span class="font-semibold">${pkg.name}</span></div>
-    <div class="flex justify-between"><span class="text-ink-700/60">Student</span><span class="font-semibold">${student.fullName || '—'}</span></div>
+    <div class="flex justify-between"><span class="text-ink-700/60">Student</span><span class="font-semibold">${fullName || '—'}</span></div>
     <div class="flex justify-between"><span class="text-ink-700/60">Destination</span><span class="font-semibold">${student.destination || '—'}</span></div>
     <div class="flex justify-between"><span class="text-ink-700/60">Intake</span><span class="font-semibold">${student.intake || '—'}</span></div>
     <div class="flex justify-between pt-2 border-t border-gray-200"><span class="font-bold">Total due</span><span class="font-extrabold text-brand-700">Free, no payment required</span></div>
