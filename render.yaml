@@ -14,5 +14,9 @@ services:
         sync: false
       - key: TIKTOK_CLIENT_SECRET
         sync: false
+      - key: META_APP_ID
+        sync: false
+      - key: META_APP_SECRET
+        sync: false
       - key: ADMIN_SECRET
         sync: false
