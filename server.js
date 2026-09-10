@@ -388,7 +388,14 @@ app.get('/api/meta/callback', async (req, res) => {
     const pagesData = await pagesRes.json();
     if (pagesData.error) throw new Error(pagesData.error.message);
     if (!pagesData.data || !pagesData.data.length) {
-      throw new Error('No Facebook Page found for this account. Make sure you are an admin of the UniPath Page.');
+      // TEMPORARY DIAGNOSTIC: surface what Facebook actually granted, to debug why /me/accounts is empty.
+      const permsRes = await fetch(`${GRAPH}/me/permissions?access_token=${longData.access_token}`);
+      const permsData = await permsRes.json().catch(() => ({}));
+      throw new Error(
+        'No Facebook Page found for this account. Make sure you are an admin of the UniPath Page.\n\n' +
+        'DEBUG — granted permissions: ' + JSON.stringify(permsData) + '\n' +
+        'DEBUG — /me/accounts raw response: ' + JSON.stringify(pagesData)
+      );
     }
 
     const page = pagesData.data[0];
@@ -402,7 +409,7 @@ app.get('/api/meta/callback', async (req, res) => {
     res.send(`<h1>Facebook/Instagram connected</h1><p>Page: ${page.name}${metaTokens.igUserId ? ' (Instagram linked)' : ' (no Instagram account linked)'}</p><p>You can close this tab.</p>`);
   } catch (err) {
     console.error('meta callback error:', err.message);
-    res.status(400).send(`<h1>Connection failed</h1><p>${err.message}</p>`);
+    res.status(400).send(`<h1>Connection failed</h1><pre style="white-space:pre-wrap;font-family:inherit;">${err.message}</pre>`);
   }
 });
 
