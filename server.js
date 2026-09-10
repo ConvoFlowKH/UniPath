@@ -351,7 +351,7 @@ app.get('/api/meta/login', (req, res) => {
     client_id: metaAppId,
     redirect_uri: metaRedirectUri,
     state: metaOAuthState,
-    scope: 'pages_show_list,pages_read_engagement,pages_manage_posts,instagram_basic,instagram_content_publish',
+    scope: 'pages_show_list,pages_read_engagement,pages_manage_posts,instagram_basic,instagram_content_publish,business_management',
     response_type: 'code',
   });
   res.redirect(`https://www.facebook.com/v19.0/dialog/oauth?${params.toString()}`);
