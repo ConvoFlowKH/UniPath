@@ -497,6 +497,20 @@ app.post('/api/meta/post', requireAdmin, upload.single('video'), async (req, res
   }
 });
 
+// Catches errors thrown before a route's own try/catch runs (e.g. multer
+// rejecting an oversized upload) — without this, Express falls back to its
+// default HTML error page, which breaks admin.html's res.json() parsing.
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({ error: 'Video file is too large (50MB max) — try a shorter or more compressed clip.' });
+    }
+    return res.status(400).json({ error: `Upload error: ${err.message}` });
+  }
+  console.error('Unhandled error:', err);
+  res.status(500).json({ error: err.message || 'Something went wrong on the server.' });
+});
+
 const PORT = process.env.PORT || 4242;
 app.listen(PORT, () => {
   console.log(`UniPath running at http://localhost:${PORT}`);
