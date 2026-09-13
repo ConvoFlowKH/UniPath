@@ -16,6 +16,15 @@
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2322215198522046&ev=PageView&noscript=1"/></noscript>
 <!-- End Facebook Pixel Code -->
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-300H4DB4C6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-300H4DB4C6');
+</script>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1153,6 +1162,7 @@ function confirmFreeBooking(){
   const reference = 'UP-' + Math.random().toString(36).slice(2, 10).toUpperCase();
 
   if (typeof fbq === 'function') fbq('track', 'Lead');
+  if (typeof gtag === 'function') gtag('event', 'generate_lead');
   document.getElementById('successMessage').textContent = "You're all set — no payment was needed. A confirmation email is on its way, and your mentor will reach out within 24 hours.";
   document.getElementById('successSummary').innerHTML = `
     <div class="flex justify-between"><span class="text-ink-700/60">Booking reference</span><span class="font-bold">${reference}</span></div>
@@ -1250,6 +1260,7 @@ async function handleStripeReturn(){
 
       if (data.paymentStatus === 'paid'){
         if (typeof fbq === 'function') fbq('track', 'Purchase', { value: data.amountTotal / 100, currency: 'USD' });
+        if (typeof gtag === 'function') gtag('event', 'purchase', { value: data.amountTotal / 100, currency: 'USD', transaction_id: sessionId });
         const pkg = PACKAGES[data.metadata.packageId] || { name: data.metadata.packageId };
         document.getElementById('successSummary').innerHTML = `
           <div class="flex justify-between"><span class="text-ink-700/60">Booking reference</span><span class="font-bold">${sessionId.slice(-10).toUpperCase()}</span></div>
