@@ -25,43 +25,10 @@
   gtag('config', 'G-300H4DB4C6');
 </script>
 
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Urbanist:wght@500;600;700;800&display=swap" rel="stylesheet">
-
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-          heading: ['Urbanist', 'ui-sans-serif', 'system-ui', 'sans-serif']
-        },
-        colors: {
-          brand: {
-            50: '#fff3ed', 100: '#ffe3d5', 200: '#ffc4aa', 300: '#ff9c74',
-            400: '#ff8256', 500: '#fe6a2e', 600: '#ef5015', 700: '#c73e10',
-            800: '#9e3212', 900: '#7f2c14'
-          },
-          ink: { 900: '#111111', 800: '#1b1b1b', 700: '#292929' }
-        },
-        boxShadow: {
-          soft: '0 10px 30px -10px rgba(15, 23, 42, 0.12)',
-          card: '0 2px 10px rgba(15, 23, 42, 0.06)'
-        },
-        keyframes: {
-          popIn: { '0%': { opacity: 0, transform: 'scale(.9)' }, '100%': { opacity: 1, transform: 'scale(1)' } },
-          checkDraw: { '0%': { strokeDashoffset: 48 }, '100%': { strokeDashoffset: 0 } },
-        },
-        animation: {
-          popIn: 'popIn .35s ease forwards',
-          checkDraw: 'checkDraw .6s ease forwards .15s',
-        }
-      }
-    }
-  }
-</script>
 
 <style>
   html { scroll-behavior: smooth; }
@@ -183,12 +150,12 @@
       </div>
 
       <div class="reveal mt-9 flex flex-col sm:flex-row gap-4 justify-center" style="animation-delay:.2s">
-        <button onclick="scrollToId('pricing')" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-900 hover:bg-black text-white font-semibold px-7 py-3.5 shadow-soft transition">
-          Explore Packages
+        <button onclick="openBookingModal('discovery')" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-ink-900 hover:bg-black text-white font-semibold px-7 py-3.5 shadow-soft transition">
+          Book Free Consultation
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M7 7h10v10M17 7 7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button onclick="openBookingModal('discovery')" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-gray-200 hover:border-brand-300 text-ink-900 font-semibold px-7 py-3.5 shadow-card transition">
-          Book Free Consultation
+        <button onclick="scrollToId('pricing')" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-white border border-gray-200 hover:border-brand-300 text-ink-900 font-semibold px-7 py-3.5 shadow-card transition">
+          Explore Packages
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none"><path d="M7 7h10v10M17 7 7 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -526,7 +493,7 @@
 
         <!-- STEP 2: STUDENT DETAILS -->
         <div id="step2" class="step-panel hidden">
-          <p class="sm:col-span-2 text-sm text-ink-700/70 -mt-1 mb-1">The more we know upfront, the faster your mentor can help — this takes about a minute.</p>
+          <p id="step2Intro" class="sm:col-span-2 text-sm text-ink-700/70 -mt-1 mb-1">The more we know upfront, the faster your mentor can help — this takes about a minute.</p>
           <form id="detailsForm" class="grid sm:grid-cols-2 gap-4" novalidate>
             <div>
               <label class="text-sm font-semibold">First name</label>
@@ -548,65 +515,67 @@
               <input required name="email" type="email" placeholder="you@example.com" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400" />
               <p class="err-msg"></p>
             </div>
-            <div class="sm:col-span-2">
-              <label class="text-sm font-semibold">Where are you in your applications?</label>
-              <select required name="applicationStage" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
-                <option value="">Select an option</option>
-                <option value="exploring">Just exploring — I need guidance on where to apply</option>
-                <option value="shortlist">I have a shortlist but need help applying</option>
-                <option value="ready">I'm ready to apply and want expert review</option>
-                <option value="submitted">I've already submitted applications</option>
-              </select>
-              <p class="err-msg"></p>
-            </div>
-            <div>
-              <label class="text-sm font-semibold">Field of study</label>
-              <select required name="fieldOfStudy" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
-                <option value="">Select a field</option>
-                <option value="business">Business / Management</option>
-                <option value="engineering">Engineering</option>
-                <option value="cs">Computer Science / IT</option>
-                <option value="sciences">Sciences</option>
-                <option value="social_sciences">Social Sciences</option>
-                <option value="arts_humanities">Arts / Humanities</option>
-                <option value="law">Law</option>
-                <option value="medicine">Medicine / Health</option>
-                <option value="undecided">Not sure yet</option>
-              </select>
-              <p class="err-msg"></p>
-            </div>
-            <div>
-              <label class="text-sm font-semibold">Destination country</label>
-              <select required name="destination" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
-                <option value="">Select a country</option>
-                <option value="USA">United States</option>
-                <option value="UK">United Kingdom</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-                <option value="Singapore">Singapore</option>
-                <option value="SouthKorea">South Korea</option>
-                <option value="Other">Other / Not sure yet</option>
-              </select>
-              <p class="err-msg"></p>
-            </div>
-            <div class="sm:col-span-2">
-              <label class="text-sm font-semibold">Target intake</label>
-              <select required name="intake" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
-                <option value="">Select intake</option>
-                <option>Fall 2026</option>
-                <option>Spring 2027</option>
-                <option>Fall 2027</option>
-              </select>
-              <p class="err-msg"></p>
-            </div>
-            <div class="sm:col-span-2">
-              <label class="text-sm font-semibold">What's your current education?</label>
-              <textarea required name="currentEducation" rows="2" placeholder="e.g. I'm in Grade 12 at Liger Learning Center, focusing on Science." class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
-              <p class="err-msg"></p>
-            </div>
-            <div class="sm:col-span-2">
-              <label class="text-sm font-semibold">Do you have schools or programs in mind? <span class="text-ink-700/50 font-normal">(optional)</span></label>
-              <textarea name="targetSchools" rows="2" placeholder="e.g. I'm aiming for a Bachelor's in Computer Science, ideally at NUS or UBC, but open to suggestions." class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+            <div id="extraQuestionsWrap" class="sm:col-span-2 grid sm:grid-cols-2 gap-4">
+              <div class="sm:col-span-2">
+                <label class="text-sm font-semibold">Where are you in your applications?</label>
+                <select data-required-if-paid name="applicationStage" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
+                  <option value="">Select an option</option>
+                  <option value="exploring">Just exploring — I need guidance on where to apply</option>
+                  <option value="shortlist">I have a shortlist but need help applying</option>
+                  <option value="ready">I'm ready to apply and want expert review</option>
+                  <option value="submitted">I've already submitted applications</option>
+                </select>
+                <p class="err-msg"></p>
+              </div>
+              <div>
+                <label class="text-sm font-semibold">Field of study</label>
+                <select data-required-if-paid name="fieldOfStudy" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
+                  <option value="">Select a field</option>
+                  <option value="business">Business / Management</option>
+                  <option value="engineering">Engineering</option>
+                  <option value="cs">Computer Science / IT</option>
+                  <option value="sciences">Sciences</option>
+                  <option value="social_sciences">Social Sciences</option>
+                  <option value="arts_humanities">Arts / Humanities</option>
+                  <option value="law">Law</option>
+                  <option value="medicine">Medicine / Health</option>
+                  <option value="undecided">Not sure yet</option>
+                </select>
+                <p class="err-msg"></p>
+              </div>
+              <div>
+                <label class="text-sm font-semibold">Destination country</label>
+                <select data-required-if-paid name="destination" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
+                  <option value="">Select a country</option>
+                  <option value="USA">United States</option>
+                  <option value="UK">United Kingdom</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Australia">Australia</option>
+                  <option value="Singapore">Singapore</option>
+                  <option value="SouthKorea">South Korea</option>
+                  <option value="Other">Other / Not sure yet</option>
+                </select>
+                <p class="err-msg"></p>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="text-sm font-semibold">Target intake</label>
+                <select data-required-if-paid name="intake" class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400 bg-white">
+                  <option value="">Select intake</option>
+                  <option>Fall 2026</option>
+                  <option>Spring 2027</option>
+                  <option>Fall 2027</option>
+                </select>
+                <p class="err-msg"></p>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="text-sm font-semibold">What's your current education?</label>
+                <textarea data-required-if-paid name="currentEducation" rows="2" placeholder="e.g. I'm in Grade 12 at Liger Learning Center, focusing on Science." class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+                <p class="err-msg"></p>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="text-sm font-semibold">Do you have schools or programs in mind? <span class="text-ink-700/50 font-normal">(optional)</span></label>
+                <textarea name="targetSchools" rows="2" placeholder="e.g. I'm aiming for a Bachelor's in Computer Science, ideally at NUS or UBC, but open to suggestions." class="mt-1.5 w-full rounded-xl border border-gray-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+              </div>
             </div>
           </form>
         </div>
@@ -831,6 +800,10 @@ const TESTIMONIALS = [
   { quote: "My mentor rewrote my SOP three times until it actually sounded like me. Got into my #1 choice in Toronto.", name: "Amara O.", school: "University of Toronto, Canada" },
   { quote: "The mock visa interviews were uncannily close to the real thing. I walked in prepared and got approved same day.", name: "Daniel K.", school: "University of Manchester, UK" },
   { quote: "Four times cheaper than the agency my friend used, and honestly more responsive. Worth every dollar.", name: "Priya S.", school: "Arizona State University, USA" },
+  { quote: "I booked the free call not expecting much, and my mentor actually called back within a day with a real shortlist. That's when I knew this was different.", name: "Sokha R.", school: "National University of Singapore" },
+  { quote: "I had zero idea where to start. My mentor mapped out a realistic timeline in our first call and I applied on schedule for once.", name: "Chenda P.", school: "Yonsei University, South Korea" },
+  { quote: "They caught a mistake on my transcript request that would have delayed my whole application by a semester.", name: "Vibol T.", school: "University of Melbourne, Australia" },
+  { quote: "No hidden fees, no upsells halfway through. What I paid upfront is what I paid, period.", name: "Sreymom L.", school: "University of British Columbia, Canada" },
 ];
 
 let testimonialIndex = 0;
@@ -1124,6 +1097,7 @@ function goToStep(n){
 
   if (n === 2) {
     prefillDestination();
+    updateExtraQuestionsVisibility();
     trackFunnel('booking_step2_reached', { package_id: state.packageId });
   }
   if (n === 3) {
@@ -1151,6 +1125,23 @@ function prefillDestination(){
   if (!state.destinationPick) return;
   const select = document.querySelector('#detailsForm [name="destination"]');
   if (select && !select.value) select.value = state.destinationPick;
+}
+
+/* The free discovery call only needs a name and a way to reach the student —
+   a mentor asks everything else (stage, field, destination, intake) live on
+   the call itself. Paid packages keep the full qualifying form since that
+   context is needed before the mentor starts real work. */
+function updateExtraQuestionsVisibility(){
+  const isFree = calcTotal() === 0;
+  const wrap = document.getElementById('extraQuestionsWrap');
+  wrap.classList.toggle('hidden', isFree);
+  wrap.querySelectorAll('[data-required-if-paid]').forEach(el => {
+    if (isFree) el.removeAttribute('required');
+    else el.setAttribute('required', '');
+  });
+  document.getElementById('step2Intro').textContent = isFree
+    ? "Just enough to have your mentor reach out — everything else, we'll ask on the call."
+    : "The more we know upfront, the faster your mentor can help — this takes about a minute.";
 }
 
 function nextStep(){

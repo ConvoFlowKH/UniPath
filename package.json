@@ -4,7 +4,8 @@
   "private": true,
   "description": "UniPath study abroad consultancy site with Stripe Checkout integration.",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "tailwindcss -i ./src/input.css -o ./public/styles.css --minify"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -14,5 +15,8 @@
     "express": "^4.19.2",
     "multer": "^2.3.0",
     "stripe": "^16.12.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
   }
 }

@@ -3,7 +3,7 @@ services:
     name: unipath
     runtime: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
       - key: STRIPE_SECRET_KEY
