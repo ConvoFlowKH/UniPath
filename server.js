@@ -96,6 +96,28 @@ function buildLineItems(packageId, addonIds) {
   return lineItems;
 }
 
+async function sendAdminEmail(subject, text) {
+  if (!resendApiKey) return;
+  const resendRes = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${resendApiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'UniPath Website <onboarding@resend.dev>',
+      to: contactInboxEmail,
+      subject,
+      text,
+    }),
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!resendRes.ok) {
+    const body = await resendRes.json().catch(() => ({}));
+    throw new Error(body.message || `Resend responded with ${resendRes.status}`);
+  }
+}
+
 app.post('/api/create-checkout-session', async (req, res) => {
   try {
     const { packageId, addons, student } = req.body || {};
@@ -149,9 +171,64 @@ app.get('/api/session/:id', async (req, res) => {
       customerEmail: session.customer_details ? session.customer_details.email : null,
       metadata: session.metadata,
     });
+
+    // Fired from the browser exactly once per completed checkout return (the query
+    // param is stripped from the URL right after), so this won't double-send on a
+    // normal flow — a manual re-visit of the stale success URL is the only repeat case.
+    if (session.payment_status === 'paid') {
+      const m = session.metadata || {};
+      sendAdminEmail(
+        `Paid booking: ${m.fullName || 'New student'} — $${(session.amount_total / 100).toFixed(2)}`,
+        `Package: ${m.packageId || '—'}\n` +
+        `Add-ons: ${m.addons || '—'}\n` +
+        `Student: ${m.fullName || '—'}\n` +
+        `Email: ${session.customer_details?.email || '—'}\n` +
+        `Phone: ${m.phone || '—'}\n` +
+        `Destination: ${m.destination || '—'}\n` +
+        `Intake: ${m.intake || '—'}\n` +
+        `Application stage: ${m.applicationStage || '—'}\n` +
+        `Field of study: ${m.fieldOfStudy || '—'}\n` +
+        `Current education: ${m.currentEducation || '—'}\n` +
+        `Target schools: ${m.targetSchools || '—'}\n` +
+        `Amount paid: $${(session.amount_total / 100).toFixed(2)}\n` +
+        `Stripe session: ${session.id}`
+      ).catch(err => console.error('booking notification email error (paid):', err.message));
+    }
   } catch (err) {
     console.error('session lookup error:', err.message);
     res.status(400).json({ error: err.message });
+  }
+});
+
+app.post('/api/book-free', async (req, res) => {
+  try {
+    const s = req.body || {};
+    const fullName = `${s.firstName || ''} ${s.lastName || ''}`.trim();
+
+    if (!fullName || !s.phone || !s.email) {
+      return res.status(400).json({ error: 'Name, phone, and email are required.' });
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.email)) {
+      return res.status(400).json({ error: 'Enter a valid email address.' });
+    }
+
+    const reference = 'UP-' + crypto.randomBytes(4).toString('hex').toUpperCase();
+
+    await sendAdminEmail(
+      `Free consultation booked: ${fullName}`,
+      `Reference: ${reference}\n` +
+      `Student: ${fullName}\n` +
+      `Email: ${s.email}\n` +
+      `Phone: ${s.phone}\n` +
+      `Destination: ${s.destination || '—'}`
+    );
+
+    res.json({ ok: true, reference });
+  } catch (err) {
+    console.error('book-free error:', err.message);
+    // Don't block the booking confirmation on email delivery — the student still
+    // gets their reference, we just won't have been notified for this one.
+    res.json({ ok: true, reference: 'UP-' + crypto.randomBytes(4).toString('hex').toUpperCase(), emailFailed: true });
   }
 });
 

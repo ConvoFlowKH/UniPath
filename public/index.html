@@ -1159,15 +1159,35 @@ function nextStep(){
 
 /* Free packages (e.g. the discovery call) skip Stripe entirely — Checkout Sessions
    in payment mode reject a $0 total, and no payment is needed anyway. */
-function confirmFreeBooking(){
+async function confirmFreeBooking(){
   const pkg = PACKAGES[state.packageId];
   const student = Object.fromEntries(new FormData(document.getElementById('detailsForm')));
   const fullName = `${student.firstName || ''} ${student.lastName || ''}`.trim();
-  const reference = 'UP-' + Math.random().toString(36).slice(2, 10).toUpperCase();
+  let reference = 'UP-' + Math.random().toString(36).slice(2, 10).toUpperCase();
+
+  const nextBtn = document.getElementById('nextBtn');
+  const originalHTML = nextBtn.innerHTML;
+  nextBtn.disabled = true;
+  nextBtn.innerHTML = `<span class="h-4 w-4 rounded-full border-2 border-white/40 spinner"></span> Confirming...`;
+
+  try {
+    const res = await fetch('/api/book-free', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(student),
+    });
+    const data = await res.json();
+    if (data.reference) reference = data.reference;
+  } catch (err) {
+    console.error('book-free request failed:', err);
+  } finally {
+    nextBtn.disabled = false;
+    nextBtn.innerHTML = originalHTML;
+  }
 
   if (typeof fbq === 'function') fbq('track', 'Lead');
   if (typeof gtag === 'function') gtag('event', 'generate_lead');
-  document.getElementById('successMessage').textContent = "You're all set — no payment was needed. A confirmation email is on its way, and your mentor will reach out within 24 hours.";
+  document.getElementById('successMessage').textContent = "You're all set — no payment was needed. Your mentor will reach out within 24 hours.";
   document.getElementById('successSummary').innerHTML = `
     <div class="flex justify-between"><span class="text-ink-700/60">Booking reference</span><span class="font-bold">${reference}</span></div>
     <div class="flex justify-between"><span class="text-ink-700/60">Package</span><span class="font-semibold">${pkg.name}</span></div>
