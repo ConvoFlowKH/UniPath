@@ -978,6 +978,13 @@ function calcTotal(){
   return pkg.price + addonsTotal;
 }
 
+/* Fires the same funnel event to both the Meta Pixel and GA4, so drop-off
+   between steps is visible in either dashboard without cross-referencing. */
+function trackFunnel(name, params){
+  if (typeof fbq === 'function') fbq('trackCustom', name, params || {});
+  if (typeof gtag === 'function') gtag('event', name, params || {});
+}
+
 function openBookingModal(packageId){
   state.packageId = packageId;
   state.addons = [];
@@ -987,6 +994,7 @@ function openBookingModal(packageId){
   document.body.style.overflow = 'hidden';
   renderStep1();
   goToStep(1);
+  trackFunnel('booking_started', { package_id: packageId });
 }
 
 function closeBookingModal(){
@@ -1114,8 +1122,12 @@ function goToStep(n){
     nextBtn.disabled = false;
   }
 
-  if (n === 2) prefillDestination();
+  if (n === 2) {
+    prefillDestination();
+    trackFunnel('booking_step2_reached', { package_id: state.packageId });
+  }
   if (n === 3) {
+    trackFunnel('booking_step3_reached', { package_id: state.packageId, value: calcTotal() });
     document.getElementById('payingForLabel').textContent = `Paying for: ${PACKAGES[state.packageId].name}`;
     const icon = document.getElementById('paymentIcon');
     const title = document.getElementById('paymentTitle');
@@ -1146,6 +1158,7 @@ function nextStep(){
     goToStep(2);
   } else if (state.step === 2){
     if (validateForm('detailsForm')) goToStep(3);
+    else trackFunnel('booking_step2_validation_failed', { package_id: state.packageId });
   } else if (state.step === 3){
     if (!validateForm('paymentForm')) return;
     if (calcTotal() === 0) confirmFreeBooking();
@@ -1238,6 +1251,8 @@ async function goToStripeCheckout(){
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error || 'Could not start checkout.');
+    if (typeof fbq === 'function') fbq('track', 'InitiateCheckout', { value: calcTotal(), currency: 'USD' });
+    if (typeof gtag === 'function') gtag('event', 'begin_checkout', { value: calcTotal(), currency: 'USD' });
     window.location.href = data.url;
   } catch (err) {
     nextBtn.disabled = false;
